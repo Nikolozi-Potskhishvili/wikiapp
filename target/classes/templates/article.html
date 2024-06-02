@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${article.title}">Article</title>
+</head>
+<body>
+<h1 th:text="${article.title}">Article Title</h1>
+<div th:each="paragraph : ${article.paragraphs}">
+    <h2 th:text="'Paragraph ' + ${paragraph.position}"></h2>
+    <p th:text="${paragraph.content}"></p>
+</div>
+</body>
+</html>
