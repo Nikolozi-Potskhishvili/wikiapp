@@ -8,9 +8,8 @@ import com.freewiki.wikiapp.services.ParagraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ParagraphController {
@@ -21,6 +20,12 @@ public class ParagraphController {
     public ParagraphController(ParagraphService paragraphService, ArticleService articleService) {
         this.paragraphService = paragraphService;
         this.articleService = articleService;
+    }
+    @GetMapping("/editParagraph/{id}")
+    public String editParagraph(@PathVariable("id") Long id, Model model) {
+        Paragraph paragraph = paragraphService.findById(id);
+        model.addAttribute("paragraph", paragraph);
+        return "editParagraph";
     }
 
     @PostMapping("/updateParagraph")

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Edit paragraph ' + ${paragraph.type}">Edit paragraph</title>
+</head>
+<body>
+    <button type="button" class="edit-button" th:attr="onclick='editParagraph(' + ${paragraph.id} +')'">Edit</button>
+    <div th:attr="id='editParagraph' + ${paragraph.id}" style="display: none;">
+        <textarea th:attr="id='editParagraphInput' + ${paragraph.id}" th:text="${paragraph.content}"></textarea>
+        <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${paragraph.id} + ')'">Save</button>
+    </div>
+</body>
+</html>

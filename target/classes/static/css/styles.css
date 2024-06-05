@@ -8,7 +8,7 @@
 /* Body styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #5a5a5e;
+    background-color: #cbc7dc;
     color: #333;
     line-height: 1.6;
     margin: 0;
@@ -65,7 +65,7 @@ input[type="text"] {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #3d9afd;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -75,7 +75,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #3d9afd;
 }
 
 
@@ -89,6 +89,7 @@ button:hover {
 textarea {
     padding: 5px;
     margin: 5px 0;
+    background-color: #d0a2f3;
     border: 1px solid #ccc;
     width: 100%; /* Take up full width of parent */
     min-height: 100px; /* Set minimum height */

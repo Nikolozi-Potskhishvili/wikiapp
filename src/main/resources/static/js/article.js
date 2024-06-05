@@ -1,9 +1,9 @@
-function editParagraph(articleId, id) {
+function editParagraph(id) {
     document.getElementById('paragraphContent' + id).style.display = 'none';
     document.getElementById('editParagraph' + id).style.display = 'block';
 }
 
-function saveParagraph(articleId, id) {
+function saveParagraph(id) {
     let newContent = document.getElementById('editParagraphInput' + id).value;
     document.getElementById('paragraphContent' + id).textContent = newContent;
     document.getElementById('paragraphContent' + id).style.display = 'block';

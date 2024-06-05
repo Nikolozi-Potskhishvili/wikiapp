@@ -11,14 +11,12 @@
 <div id = "paragraph" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
     <div class="paragraph-header">
         <h2 th:text="'Paragraph ' + ${paragraph.type}"></h2>
-        <button type="button" class="edit-button" th:attr="onclick='editParagraph(' + ${article.id} + ',' + ${paragraph.id} + ')'">Edit</button>
+        <a th:href="@{/editParagraph/{id}(id=${paragraph.id})}" title="Edit ${paragraph.type}">
+            <span>edit</span>
+        </a>
     </div>
     <div th:attr="id='paragraphContent' + ${paragraph.id}">
         <p class th:text="${paragraph.content}"></p>
-    </div>
-    <div th:attr="id='editParagraph' + ${paragraph.id}" style="display: none;">
-        <textarea th:attr="id='editParagraphInput' + ${paragraph.id}" th:text="${paragraph.content}"></textarea>
-        <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${article.id} + ',' + ${paragraph.id} + ')'">Save</button>
     </div>
 </div>
 </body>
