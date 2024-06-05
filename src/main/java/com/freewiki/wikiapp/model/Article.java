@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.security.Timestamp;
+import java.util.*;
 
 
 @Entity
-@Table
+@Table(name = "articles")
 public class Article {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,13 +22,28 @@ public class Article {
     @JoinColumn(name = "author_id")
     private User author;
 
+    public List<Paragraph> getParagraphs() {
+        return paragraphs;
+    }
+
+    public void setParagraphs(List<Paragraph> paragraphs) {
+        this.paragraphs = paragraphs;
+    }
+
     @ManyToOne
     @JoinColumn(name = "forked_from_id")
     private Article forkedFrom;
 
     @Column(updatable = false)
-    private Timestamp createdAt;
+    private Date createdAt;
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paragraph> paragraphs = new LinkedList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -60,11 +77,11 @@ public class Article {
         this.forkedFrom = forkedFrom;
     }
 
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

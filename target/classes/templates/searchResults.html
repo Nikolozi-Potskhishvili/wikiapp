@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+<div th:each="article : ${articles}">
+    <a th:href="@{'/article/' + ${article.id}}" th:text="${article.title}"></a>
+</div>
+</body>
+</html>

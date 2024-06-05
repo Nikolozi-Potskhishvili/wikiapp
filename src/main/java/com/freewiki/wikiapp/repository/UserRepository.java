@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByUsername(String username);
+    Optional<User> findUserById(Long id);
     Optional<User> findUserByUsernameAndPassword(String username, String password);
     @Modifying
     @Query(value = "insert into users (created_at, email, password, username) values (:createdAt, :email, :password, :username)", nativeQuery = true)

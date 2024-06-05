@@ -35,6 +35,12 @@ public class UserService {
         }
     }
 
+    public User getUserById(long id) {
+        Optional<User> user = userRepository.findUserById(id);
+        if(user.isPresent()) return user.get();
+        throw new RuntimeException("No such user exists");
+    }
+
     public void addNewUser(User user) {
        Optional<User> userByEmail =  userRepository.findUserByEmail(user.getEmail());
         Optional<User> userByUsername = userRepository.findUserByUsername(user.getUsername());

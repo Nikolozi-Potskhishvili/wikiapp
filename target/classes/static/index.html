@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Free wiki</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
-    <h3> Welcome to free wiki</h3> <a href="login.html"> Login</a> <a href="createAccount.html"> Create Account</a> <br/>
-    <a href="createArticle.html"> Login</a>
-
+    <div class="center-container">
+        <h3> Welcome to free wiki</h3> <a href="login.html"> Login</a> <a href="createAccount.html"> Create Account</a> <br/>
+        <form action="/createNewArticle" method="post">
+            <label for="title"> Enter Title </label>
+            <input type="text" id = "title" name="title">
+            <button type="submit"> Create New Article</button>
+        </form>
+        <form action="/searchForArticle" method="get">
+            <label for="articleTitle"> Enter Title </label>
+            <input type="text" id = "articleTitle" name="title">
+            <button type="submit"> Search for an article</button>
+        </form>
+    </div>
 </body>
 </html>

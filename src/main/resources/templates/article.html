@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${article.title}">Article</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script src="/js/article.js" defer></script> <!-- Include your JS file here -->
 </head>
 <body>
 <h1 th:text="${article.title}">Article Title</h1>
-<div th:each="paragraph : ${article.paragraphs}">
-    <h2 th:text="'Paragraph ' + ${paragraph.position}"></h2>
-    <p th:text="${paragraph.content}"></p>
+<div id = "paragraph" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
+    <div class="paragraph-header">
+        <h2 th:text="'Paragraph ' + ${paragraph.type}"></h2>
+        <button type="button" class="edit-button" th:attr="onclick='editParagraph(' + ${article.id} + ',' + ${paragraph.id} + ')'">Edit</button>
+    </div>
+    <div th:attr="id='paragraphContent' + ${paragraph.id}">
+        <p class th:text="${paragraph.content}"></p>
+    </div>
+    <div th:attr="id='editParagraph' + ${paragraph.id}" style="display: none;">
+        <textarea th:attr="id='editParagraphInput' + ${paragraph.id}" th:text="${paragraph.content}"></textarea>
+        <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${article.id} + ',' + ${paragraph.id} + ')'">Save</button>
+    </div>
 </div>
 </body>
 </html>

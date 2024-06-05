@@ -27,6 +27,7 @@ public class UserController {
         try {
             User userToLogIn = userService.checkLogin(username, password);
             model.addAttribute("username", userToLogIn.getUsername());
+            model.addAttribute("id", userToLogIn.getId());
             return "welcome";
         } catch (IllegalStateException e) {
             if(e.getMessage().equals("Password is incorrect")) {
