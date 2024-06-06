@@ -2,6 +2,7 @@ package com.freewiki.wikiapp.services;
 
 
 import com.freewiki.wikiapp.model.Article;
+import com.freewiki.wikiapp.model.Paragraph;
 import com.freewiki.wikiapp.model.User;
 import com.freewiki.wikiapp.repository.ArticleRepository;
 import com.freewiki.wikiapp.repository.UserRepository;
@@ -29,11 +30,32 @@ public class ArticleService {
         return articles;
     }
 
-    public Article findArticleById(Long id) {
-        return articleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Article not found"));
+    public Article findArticleById(Long articleId) {
+        return articleRepository.findById(articleId).orElseThrow(() -> new IllegalArgumentException("Article not found"));
+    }
+
+    public Article changeTitle(Long articleId, String title) {
+        Article article = findArticleById(articleId);
+        article.setTitle(title);
+        return article;
     }
 
     public Article save(Article article) {
         return articleRepository.save(article);
+    }
+
+    public Article addNewParagraph(long articleId, String type) {
+        Article article = findArticleById(articleId);
+
+        List<Paragraph> paragraphs = article.getParagraphs();
+
+        Paragraph paragraph = new Paragraph();
+        paragraph.setType(type);
+        paragraph.setArticle(article);
+        paragraph.setContent("");
+        paragraph.setPosition(paragraphs.size());
+        paragraphs.add(paragraph);
+        articleRepository.save(article);
+        return article;
     }
 }

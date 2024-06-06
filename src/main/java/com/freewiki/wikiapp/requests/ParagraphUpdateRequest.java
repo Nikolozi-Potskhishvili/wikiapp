@@ -1,4 +1,4 @@
-package com.freewiki.wikiapp.model;
+package com.freewiki.wikiapp.requests;
 
 public class ParagraphUpdateRequest {
 

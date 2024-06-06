@@ -8,6 +8,9 @@ import com.freewiki.wikiapp.services.ParagraphService;
 import com.freewiki.wikiapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +52,23 @@ public class ArticleController {
         model.addAttribute("article", article);
         if(article != null) return "article";
         return null;
+    }
+
+    @PostMapping("/addNewParagraph")
+    public String addNewParagraph(@RequestParam("articleId") long articleId,
+                                  @RequestParam("paragraphType") String type,
+                                  final Model model) {
+        Article article = articleService.addNewParagraph(articleId, type);
+        model.addAttribute("article", article);
+        return "article";
+    }
+
+    @PostMapping("/changeArticleTitle")
+    public String changeArticleName(@RequestParam("articleId") long articleId,
+                                            @RequestParam("title") String title, final Model model) {
+        Article article = articleService.changeTitle(articleId, title);
+        model.addAttribute("article", article);
+        return "article";
     }
 
     @PostMapping("/createNewArticle")

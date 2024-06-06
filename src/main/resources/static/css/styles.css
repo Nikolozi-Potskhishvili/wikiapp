@@ -40,7 +40,8 @@ a:hover {
 
 /* Form styling */
 form {
-    background: #fff;
+    background: #402b5e;
+    color: white;
     padding: 20px;
     margin: 20px 0;
     border: 1px solid #ddd;
@@ -65,7 +66,7 @@ input[type="text"] {
 }
 
 button {
-    background-color: #3d9afd;
+    background-color: #9e89ff;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -75,7 +76,7 @@ button {
 }
 
 button:hover {
-    background-color: #3d9afd;
+    background-color: #9e89ff;
 }
 
 

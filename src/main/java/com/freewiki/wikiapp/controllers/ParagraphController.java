@@ -2,20 +2,16 @@ package com.freewiki.wikiapp.controllers;
 
 import com.freewiki.wikiapp.model.Article;
 import com.freewiki.wikiapp.model.Paragraph;
-import com.freewiki.wikiapp.model.ParagraphUpdateRequest;
+import com.freewiki.wikiapp.requests.ParagraphUpdateRequest;
 import com.freewiki.wikiapp.services.ArticleService;
 import com.freewiki.wikiapp.services.ParagraphService;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +34,7 @@ public class ParagraphController {
         model.addAttribute("articleId", articleId);
         return "editParagraph";
     }
+
 
     @PostMapping("/updateParagraph")
     public ResponseEntity<Object> updateParagraph(@RequestBody ParagraphUpdateRequest request) throws JSONException {

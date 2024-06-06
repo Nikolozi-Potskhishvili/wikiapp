@@ -30,6 +30,7 @@ public class Article {
         this.paragraphs = paragraphs;
     }
 
+
     @ManyToOne
     @JoinColumn(name = "forked_from_id")
     private Article forkedFrom;
@@ -84,5 +85,7 @@ public class Article {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+
 
 }
