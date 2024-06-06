@@ -19,6 +19,17 @@ public class ParagraphService {
         return paragraphRepository.save(paragraph);
     }
 
+    public Long getArticleId(long paragraphId) {
+        return paragraphRepository.findById(paragraphId).get().getArticle().getId();
+    }
+
+    public Paragraph updateParagraph(long id, String content) {
+        Paragraph paragraphToUpdate = findById(id);
+        paragraphToUpdate.setContent(content);
+        paragraphRepository.save(paragraphToUpdate);
+        return paragraphToUpdate;
+    }
+
     public Paragraph findById(long id) {
         Optional<Paragraph> paragraph = paragraphRepository.findById(id);
         if(paragraph.isPresent()) return paragraph.get();

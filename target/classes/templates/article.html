@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title th:text="${article.title}">Article</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
-    <script src="/js/article.js" defer></script> <!-- Include your JS file here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <h1 th:text="${article.title}">Article Title</h1>
 <div id = "paragraph" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
     <div class="paragraph-header">
         <h2 th:text="'Paragraph ' + ${paragraph.type}"></h2>
-        <a th:href="@{/editParagraph/{id}(id=${paragraph.id})}" title="Edit ${paragraph.type}">
+        <a th:href="@{/editParagraph(paragraphId=${paragraph.id}, articleId=${article.id})}" title="Edit ${paragraph.type}">
             <span>edit</span>
         </a>
     </div>

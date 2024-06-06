@@ -5,11 +5,20 @@ import com.freewiki.wikiapp.model.Paragraph;
 import com.freewiki.wikiapp.model.ParagraphUpdateRequest;
 import com.freewiki.wikiapp.services.ArticleService;
 import com.freewiki.wikiapp.services.ParagraphService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class ParagraphController {
@@ -21,26 +30,23 @@ public class ParagraphController {
         this.paragraphService = paragraphService;
         this.articleService = articleService;
     }
-    @GetMapping("/editParagraph/{id}")
-    public String editParagraph(@PathVariable("id") Long id, Model model) {
-        Paragraph paragraph = paragraphService.findById(id);
+    @GetMapping("/editParagraph")
+    public String editParagraph(@RequestParam("paragraphId") Long paragraphId,
+                                @RequestParam("articleId") Long articleId, Model model) {
+        Paragraph paragraph = paragraphService.findById(paragraphId);
         model.addAttribute("paragraph", paragraph);
+        model.addAttribute("articleId", articleId);
         return "editParagraph";
     }
 
     @PostMapping("/updateParagraph")
-    @ResponseBody
-    public ResponseEntity<?> updateParagraph(@RequestBody ParagraphUpdateRequest request) {
-        // Find the paragraph by position in the database and update its content
-        Article article = articleService.findArticleById(request.getArticleId());
-        for (Paragraph paragraph : article.getParagraphs()) {
-            if (paragraph.getId() == (request.getId())) {
-                paragraph.setContent(request.getContent());
-                articleService.save(article); // Save the updated article
-                break;
-            }
-        }
-        return ResponseEntity.ok().body("Paragraph updated successfully");
+    public ResponseEntity<Object> updateParagraph(@RequestBody ParagraphUpdateRequest request) throws JSONException {
+        paragraphService.updateParagraph(request.getParagraphId(), request.getContent());
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", "Paragraph updated successfully");
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(responseBody);
     }
 
 }

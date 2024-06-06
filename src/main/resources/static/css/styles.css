@@ -86,12 +86,20 @@ button:hover {
     margin: 3px auto;
 }
 
-textarea {
-    padding: 5px;
-    margin: 5px 0;
-    background-color: #d0a2f3;
-    border: 1px solid #ccc;
-    width: 100%; /* Take up full width of parent */
-    min-height: 100px; /* Set minimum height */
-    resize: vertical; /* Allow vertical resizing */
+.paragraph-editor-text-ui {
+    padding: 50px;
+    margin: 5px;
+    width: 80%;
+    height: 500px;
+
+}
+
+.paragraph-edit-textbook {
+    background-color: #cbc7dc;
+    resize: none;
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

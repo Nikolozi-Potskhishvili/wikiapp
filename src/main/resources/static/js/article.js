@@ -3,28 +3,31 @@ function editParagraph(id) {
     document.getElementById('editParagraph' + id).style.display = 'block';
 }
 
-function saveParagraph(id) {
-    let newContent = document.getElementById('editParagraphInput' + id).value;
-    document.getElementById('paragraphContent' + id).textContent = newContent;
-    document.getElementById('paragraphContent' + id).style.display = 'block';
-    document.getElementById('editParagraph' + id).style.display = 'none';
+function saveParagraph(articleId, paragraphId) {
+    let newContent = document.getElementById('editParagraphInput').value;
+    console.log('Paragraph ID:', paragraphId);
+    console.log('Article ID:', articleId);
+    //document.getElementById('paragraphContent').textContent = newContent;
+    //document.getElementById('paragraphContent').style.display = 'block';
+    //document.getElementById('editParagraph').style.display = 'none';
     // AJAX call to save the new content to the server
-    fetch('/updateParagraph', {
-        method: 'POST',
+    fetch("/updateParagraph", {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            articleId: articleId,
-            id: id,
+            paragraphId: paragraphId,
             content: newContent
-        }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
         })
-        .catch((error) => {
-            console.error('Error:', error);
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        window.location.href = `/article/` + articleId;
+    })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
         });
+
 }

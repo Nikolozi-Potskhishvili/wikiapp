@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="'Edit paragraph ' + ${paragraph.type}">Edit paragraph</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script src="/js/article.js" defer></script> <!-- Include your JS file here -->
 </head>
 <body>
-    <button type="button" class="edit-button" th:attr="onclick='editParagraph(' + ${paragraph.id} +')'">Edit</button>
-    <div th:attr="id='editParagraph' + ${paragraph.id}" style="display: none;">
-        <textarea th:attr="id='editParagraphInput' + ${paragraph.id}" th:text="${paragraph.content}"></textarea>
-        <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${paragraph.id} + ')'">Save</button>
+    <h3 th:text="${paragraph.type}">Paragraph</h3>
+    <div class="paragraph-editor-text-ui">
+        <textarea id="editParagraphInput" class="paragraph-edit-textbook">
+            <th:block th:text="${paragraph.content}"></th:block>
+        </textarea>
     </div>
+    <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${articleId}
+     + ',' + ${paragraph.id} + ')'">
+        Save
+    </button>
+
 </body>
 </html>

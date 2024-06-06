@@ -1,25 +1,17 @@
 package com.freewiki.wikiapp.model;
 
 public class ParagraphUpdateRequest {
-    private Long articleId;
 
-    private Long id;
+    private Long paragraphId;
+
     private String content;
 
-    public Long getArticleId() {
-        return articleId;
+    public Long getParagraphId() {
+        return paragraphId;
     }
 
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setParagraphId(Long paragraphId) {
+        this.paragraphId = paragraphId;
     }
 
     public String getContent() {
@@ -29,4 +21,5 @@ public class ParagraphUpdateRequest {
     public void setContent(String content) {
         this.content = content;
     }
+
 }
