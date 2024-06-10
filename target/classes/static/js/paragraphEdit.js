@@ -1,5 +1,27 @@
+function deleteParagraph(articleId, paragraphId) {
+    fetch("/deleteParagraph", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            articleId: articleId,
+            paragraphId: paragraphId
+        })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        window.location.href = `/article/` + articleId;
+    })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
 
-
+function returnToArticle(articleId) {
+    window.location.href = `/article/` + articleId;
+}
 function saveParagraph(articleId, paragraphId) {
     let newContent = document.getElementById('editParagraphInput').value;
     console.log('Paragraph ID:', paragraphId);

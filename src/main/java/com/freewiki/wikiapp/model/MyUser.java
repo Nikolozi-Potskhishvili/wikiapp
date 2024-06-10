@@ -1,17 +1,14 @@
 package com.freewiki.wikiapp.model;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
-import java.security.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "users")
-public class User {
+public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,9 +20,9 @@ public class User {
     private String password;
 
     private String email;
-
     @Column(updatable = false)
     private Date createdAt;
+
 
     @OneToMany(mappedBy = "author")
     private Set<Article> articles;

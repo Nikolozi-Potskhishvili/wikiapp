@@ -1,9 +1,7 @@
 package com.freewiki.wikiapp.model;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
-import java.security.Timestamp;
 import java.util.*;
 
 
@@ -20,7 +18,7 @@ public class Article {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private User author;
+    private MyUser author;
 
     public List<Paragraph> getParagraphs() {
         return paragraphs;
@@ -62,11 +60,11 @@ public class Article {
         this.title = title;
     }
 
-    public User getAuthor() {
+    public MyUser getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(MyUser author) {
         this.author = author;
     }
 

@@ -8,8 +8,8 @@
 /* Body styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #cbc7dc;
-    color: #333;
+    background-color: #3f3f42;
+    color: #ffffff;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
@@ -24,14 +24,18 @@ body {
 h3 {
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #444;
+    color: #ffffff;
 }
 
 /* Navigation links styling */
 a {
-    color: #007bff;
+    color: #ffffff;
     text-decoration: none;
     margin: 0 10px;
+}
+
+a:visited {
+    color: crimson;
 }
 
 a:hover {
@@ -40,7 +44,7 @@ a:hover {
 
 /* Form styling */
 form {
-    background: #402b5e;
+    background: #000000;
     color: white;
     padding: 20px;
     margin: 20px 0;
@@ -66,7 +70,7 @@ input[type="text"] {
 }
 
 button {
-    background-color: #9e89ff;
+    background-color: #5a5a5e;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -76,12 +80,12 @@ button {
 }
 
 button:hover {
-    background-color: #9e89ff;
+    background-color: #cbc7dc;
 }
 
 
 
-#paragraph {
+#paragraphs {
     border-style: solid;
     width: 70%;
     margin: 3px auto;
@@ -90,13 +94,13 @@ button:hover {
 .paragraph-editor-text-ui {
     padding: 50px;
     margin: 5px;
-    width: 80%;
-    height: 500px;
+    width: 60%;
+    height: 800px;
 
 }
 
 .paragraph-edit-textbook {
-    background-color: #cbc7dc;
+    background-color: #f3dada;
     resize: none;
     width: 100%;
     height: 100%;

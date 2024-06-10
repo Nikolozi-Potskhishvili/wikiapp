@@ -5,18 +5,39 @@
     <title th:text="'Edit paragraph ' + ${paragraph.type}">Edit paragraph</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <script src="/js/paragraphEdit.js" defer></script> <!-- Include your JS file here -->
+    <style>
+        .paragraph-edit-buttons {
+            display: inline-block;
+            place-items: center;
+        }
+    </style>
 </head>
 <body>
     <h3 th:text="${paragraph.type}">Paragraph</h3>
+    <form id="editParagraphType" action="/changeParagraphType" method="post">
+        <input type="hidden" id="articleId" name="articleId" th:value="${articleId}">
+        <input type="hidden" id="paragraphId" name="paragraphId" th:value="${paragraph.id}">
+        <label for="type">New Type:</label>
+        <input type="text" id="type" name="type" placeholder="Enter new paragraph type">
+        <button type="submit">Save title</button>
+    </form>
     <div class="paragraph-editor-text-ui">
         <textarea id="editParagraphInput" class="paragraph-edit-textbook">
             <th:block th:text="${paragraph.content}"></th:block>
         </textarea>
     </div>
-    <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${articleId}
+    <div class="paragraph-edit-buttons">
+        <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${articleId}
      + ',' + ${paragraph.id} + ')'">
-        Save
-    </button>
-
+            Save
+        </button>
+        <button type="button" class="cancel-button" th:attr="onclick='returnToArticle(' + ${articleId} + ')'">
+            Cancel
+        </button>
+        <button type="button" class="delete-button" th:attr="onclick='deleteParagraph(' + ${articleId}
+     + ',' + ${paragraph.id} + ')'">
+            Delete <Paragraph></Paragraph>
+        </button>
+    </div>
 </body>
 </html>

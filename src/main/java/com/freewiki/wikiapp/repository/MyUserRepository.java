@@ -1,6 +1,6 @@
 package com.freewiki.wikiapp.repository;
 
-import com.freewiki.wikiapp.model.User;
+import com.freewiki.wikiapp.model.MyUser;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,11 +12,11 @@ import java.util.Date;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findUserByEmail(String email);
-    Optional<User> findUserByUsername(String username);
-    Optional<User> findUserById(Long id);
-    Optional<User> findUserByUsernameAndPassword(String username, String password);
+public interface MyUserRepository extends JpaRepository<MyUser, Long> {
+    Optional<MyUser> findUserByEmail(String email);
+    Optional<MyUser> findUserByUsername(String username);
+    Optional<MyUser> findUserById(Long id);
+    Optional<MyUser> findUserByUsernameAndPassword(String username, String password);
     @Modifying
     @Query(value = "insert into users (created_at, email, password, username) values (:createdAt, :email, :password, :username)", nativeQuery = true)
     @Transactional

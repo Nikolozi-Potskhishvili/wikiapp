@@ -10,20 +10,43 @@
         .hidden {
             display: none;
         }
-        #article-title {
-            display: flex;
-            align-items: center;
-            margin-left: 50%;
-            margin-right: 50%;
+        .article-title {
+            display: grid;
+            place-items: center;
         }
         .title-container {
-            display: flex;
-            align-items: center;
             margin-right: 10px;
         }
+
+        .navigation {
+
+        }
+
+        .search-form {
+            display: inline-flex;
+        }
+
+
     </style>
 </head>
 <body>
+<div class="navigation">
+    <div class="search">
+        <form class = "search-form" action="/searchForArticle" method="get">
+            <div class="search-input">
+                <input type="text" id = "articleTitle" name="title" placeholder="Search on FreeWiki" aria-label="Search on FreeWiki">
+            </div>
+            <div class="search-button">
+                <button type="submit"> Search</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="account-manager">
+
+    </div>
+</div>
+
 <div id="article-title" class="article-title">
     <div class="title-container">
         <h1 th:text="${article.title}">Article Title</h1>
@@ -42,7 +65,7 @@
     </form>
 </div>
 
-<div id = "paragraph" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
+<div id = "paragraphs" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
     <div class="paragraph-header">
         <h2 th:text="'Paragraph ' + ${paragraph.type}"></h2>
         <a th:href="@{/editParagraph(paragraphId=${paragraph.id}, articleId=${article.id})}" title="Edit ${paragraph.type}">

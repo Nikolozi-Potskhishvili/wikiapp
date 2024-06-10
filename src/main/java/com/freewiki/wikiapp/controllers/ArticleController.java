@@ -2,36 +2,34 @@ package com.freewiki.wikiapp.controllers;
 
 import com.freewiki.wikiapp.model.Article;
 import com.freewiki.wikiapp.model.Paragraph;
-import com.freewiki.wikiapp.model.User;
+import com.freewiki.wikiapp.model.MyUser;
 import com.freewiki.wikiapp.services.ArticleService;
 import com.freewiki.wikiapp.services.ParagraphService;
-import com.freewiki.wikiapp.services.UserService;
+import com.freewiki.wikiapp.services.MyUserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
     private final ParagraphService paragraphService;
-    private final UserService userService;
+    private final MyUserService myUserService;
 
     @Autowired
-    public ArticleController(ArticleService articleService, ParagraphService paragraphService, UserService userService) {
+    public ArticleController(ArticleService articleService, ParagraphService paragraphService, MyUserService myUserService) {
         this.articleService = articleService;
         this.paragraphService = paragraphService;
-        this.userService = userService;
+        this.myUserService = myUserService;
     }
 
     @GetMapping("/searchForArticle")
@@ -54,6 +52,18 @@ public class ArticleController {
         return null;
     }
 
+    @PostMapping("/deleteParagraph")
+    public ResponseEntity<Map<String, String>> deleteParagraph(@RequestBody Map<String, Long> requestData) {
+        long articleId = requestData.get("articleId");
+        long paragraphId = requestData.get("paragraphId");
+        Article article = articleService.deleteParagraph(articleId, paragraphId);
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", "Paragraph deleted successfully");
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(responseBody);
+    }
+
     @PostMapping("/addNewParagraph")
     public String addNewParagraph(@RequestParam("articleId") long articleId,
                                   @RequestParam("paragraphType") String type,
@@ -72,15 +82,17 @@ public class ArticleController {
     }
 
     @PostMapping("/createNewArticle")
-    public String createNewArticle(@RequestParam String title, @RequestParam Long user_id,
-                                   final Model model) {
-        if(false) {
-            return "articleCreationError";
+    public String createNewArticle(@RequestParam String title,
+                                   final Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        if(username == null) {
+            return "redirect:/login";
         } else {
             String[] paragraphTypes = {"Summary", "Body", "References"};
-            User currnetUser = userService.getUserById(user_id);
+            MyUser currnetMyUser = myUserService.findUserByUsername(username);
             Article currentArticle = new Article();
-            currentArticle.setAuthor(currnetUser);
+            currentArticle.setAuthor(currnetMyUser);
             currentArticle.setTitle(title);
             for (int i = 1; i <= 3; i++) {
                 Paragraph paragraph = new Paragraph();

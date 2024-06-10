@@ -3,10 +3,7 @@ package com.freewiki.wikiapp.services;
 
 import com.freewiki.wikiapp.model.Article;
 import com.freewiki.wikiapp.model.Paragraph;
-import com.freewiki.wikiapp.model.User;
 import com.freewiki.wikiapp.repository.ArticleRepository;
-import com.freewiki.wikiapp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -55,6 +52,13 @@ public class ArticleService {
         paragraph.setContent("");
         paragraph.setPosition(paragraphs.size());
         paragraphs.add(paragraph);
+        articleRepository.save(article);
+        return article;
+    }
+
+    public Article deleteParagraph(long articleId, long paragraphId) {
+        Article article = findArticleById(articleId);
+        article.getParagraphs().removeIf(paragraph -> paragraph.getId().equals(paragraphId));
         articleRepository.save(article);
         return article;
     }

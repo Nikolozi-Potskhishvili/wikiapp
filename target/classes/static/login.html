@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+    <script src="/js/hashPassword.js" defer></script>
 </head>
 <body>
     <h3>Please log in</h3>
@@ -14,7 +16,7 @@
         <label for="password"> password: </label> <br/>
         <input type="password" id="password" name="password" required> <br/>
 
-        <button type="submit"> Login</button>
+        <button type="submit" onclick="hashPassword()"> Login</button>
     </form>
 </body>
 </html>

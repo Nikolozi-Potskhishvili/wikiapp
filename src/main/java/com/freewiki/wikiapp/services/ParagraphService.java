@@ -35,4 +35,11 @@ public class ParagraphService {
         if(paragraph.isPresent()) return paragraph.get();
         throw new IllegalArgumentException("No paragraph with id " + id + " exists");
     }
+
+    public Paragraph changeParagraphType(long paragraphId, String type) {
+        Paragraph paragraph = findById(paragraphId);
+        paragraph.setType(type);
+        paragraphRepository.save(paragraph);
+        return paragraph;
+    }
 }
