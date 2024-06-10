@@ -13,31 +13,38 @@
     </style>
 </head>
 <body>
-    <h3 th:text="${paragraph.type}">Paragraph</h3>
-    <form id="editParagraphType" action="/changeParagraphType" method="post">
-        <input type="hidden" id="articleId" name="articleId" th:value="${articleId}">
-        <input type="hidden" id="paragraphId" name="paragraphId" th:value="${paragraph.id}">
-        <label for="type">New Type:</label>
-        <input type="text" id="type" name="type" placeholder="Enter new paragraph type">
-        <button type="submit">Save title</button>
-    </form>
+<div class="page">
+    <div class="paragraph-title-div">
+        <div class="paragraph-title">
+            <h3 th:text="${paragraph.type}">Paragraph</h3>
+        </div>
+        <div class="paragraph-title-edit-div">
+            <form class="paragraph-title-edit-form" action="/changeParagraphType" method="post">
+                <input type="hidden" id="articleId" name="articleId" th:value="${articleId}">
+                <input type="hidden" id="paragraphId" name="paragraphId" th:value="${paragraph.id}">
+                <label for="type">New Type:</label>
+                <input type="text" id="type" name="type" placeholder="Enter new paragraph type">
+                <button type="submit">Save title</button>
+            </form>
+        </div>
+    </div>
     <div class="paragraph-editor-text-ui">
-        <textarea id="editParagraphInput" class="paragraph-edit-textbook">
-            <th:block th:text="${paragraph.content}"></th:block>
-        </textarea>
+        <textarea id="editParagraphInput" class="paragraph-edit-textbook" th:text="${paragraph.content}"></textarea>
     </div>
     <div class="paragraph-edit-buttons">
-        <button type="button" class="save-button" th:attr="onclick='saveParagraph(' + ${articleId}
-     + ',' + ${paragraph.id} + ')'">
+        <button type="button" class="save-button"
+                th:onclick="'saveParagraph(' + ${articleId} + ',' + ${paragraph.id} + ')'">
             Save
         </button>
-        <button type="button" class="cancel-button" th:attr="onclick='returnToArticle(' + ${articleId} + ')'">
+        <button type="button" class="cancel-button"
+                th:onclick="'returnToArticle(' + ${articleId} + ')'">
             Cancel
         </button>
-        <button type="button" class="delete-button" th:attr="onclick='deleteParagraph(' + ${articleId}
-     + ',' + ${paragraph.id} + ')'">
-            Delete <Paragraph></Paragraph>
+        <button type="button" class="delete-button"
+                th:onclick="'deleteParagraph(' + ${articleId} + ',' + ${paragraph.id} + ')'">
+            Delete
         </button>
     </div>
+</div>
 </body>
 </html>

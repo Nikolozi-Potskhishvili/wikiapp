@@ -1,110 +1,96 @@
-/* Basic reset to ensure consistency across browsers */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #3f3f42;
-    color: #ffffff;
     line-height: 1.6;
     margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #202122;
+}
+
+.page {
+    max-width: 900px;
+    margin: 0 auto;
     padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.paragraph-title-div {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-/* Header styling */
-h3 {
-    font-size: 2rem;
     margin-bottom: 20px;
-    color: #ffffff;
 }
 
-/* Navigation links styling */
-a {
-    color: #ffffff;
-    text-decoration: none;
-    margin: 0 10px;
+.paragraph-title h3 {
+    margin: 0;
+    font-size: 1.5em;
 }
 
-a:visited {
-    color: crimson;
+.paragraph-title-edit-div {
+    margin-left: 20px;
 }
 
-a:hover {
-    text-decoration: underline;
+.paragraph-title-edit-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 200px;
+    margin-right: 10px;
 }
 
-/* Form styling */
-form {
-    background: #000000;
-    color: white;
-    padding: 20px;
-    margin: 20px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-button {
-    background-color: #5a5a5e;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
+.paragraph-title-edit-form button {
+    padding: 8px 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
     cursor: pointer;
-    font-size: 1rem;
 }
 
-button:hover {
-    background-color: #cbc7dc;
-}
-
-
-
-#paragraphs {
-    border-style: solid;
-    width: 70%;
-    margin: 3px auto;
+.paragraph-title-edit-form button:hover {
+    background-color: #0056b3;
 }
 
 .paragraph-editor-text-ui {
-    padding: 50px;
-    margin: 5px;
-    width: 60%;
-    height: 800px;
-
+    margin-bottom: 20px;
 }
 
 .paragraph-edit-textbook {
-    background-color: #f3dada;
+    width: calc(100% - 20px);
+    height: 200px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1em;
     resize: none;
-    width: 100%;
-    height: 100%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+}
+
+.paragraph-edit-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.paragraph-edit-buttons button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.paragraph-edit-buttons .save-button:hover,
+.paragraph-edit-buttons .cancel-button:hover,
+.paragraph-edit-buttons .delete-button:hover {
+    background-color: #0056b3;
+}
+
+.paragraph-edit-buttons .delete-button {
+    background-color: #dc3545;
+}
+
+.paragraph-edit-buttons .delete-button:hover {
+    background-color: #c82333;
 }

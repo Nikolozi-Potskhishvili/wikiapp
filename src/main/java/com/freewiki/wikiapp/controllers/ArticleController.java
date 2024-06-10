@@ -41,13 +41,17 @@ public class ArticleController {
     }
 
     @GetMapping("/article/{id}")
-    public String getArticle(@PathVariable("id") long id, final Model model) {
+    public String getArticle(@PathVariable("id") long id, final Model model,
+                             HttpServletRequest request) {
         Article article = articleService.findArticleById(id);
         List<Paragraph> sortedParagraphs = article.getParagraphs().stream()
                 .sorted(Comparator.comparingInt(Paragraph::getPosition))
                 .collect(Collectors.toList());
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
         article.setParagraphs(sortedParagraphs);
         model.addAttribute("article", article);
+        model.addAttribute("username", username);
         if(article != null) return "article";
         return null;
     }
@@ -106,5 +110,10 @@ public class ArticleController {
             model.addAttribute("article", currentArticle);
             return "article";
         }
+    }
+
+    @GetMapping("/randomArticle")
+    public String getRandomArticle(final Model model, HttpServletRequest request) {
+        return "";
     }
 }

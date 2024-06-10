@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:value="${username}"></title>
+</head>
+<body>
+    <div class="user-profile">
+        <div class="user-info">
+            <textarea class="username-textarea" th:field="${username}"></textarea>
+            <div class="user-article-list">
+                <div th:each="article : ${articles}">
+                    <a th:href="@{'/article/' + ${article.id}}" th:text="${article.title}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #202122;
+}
+
+.article-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+
+.hidden {
+    display: none;
+}
+.hidden {
+    display: none;
+}
+.hidden {
+    display: none;
+}
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    flex-grow: 1;
+}
+
+.search-input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.search-input input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.search-button button {
+    padding: 8px 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.search-button button:hover {
+    background-color: #0056b3;
+}
+
+.account-manager {
+    align-self: center;
+}
+
+.article-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.title-container h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+#editTitleButton {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+#editTitleButton:hover {
+    background-color: #0056b3;
+}
+
+#editTitleForm, #addParagraph {
+    margin-top: 10px;
+}
+
+#editTitleForm input, #addParagraph input {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 80%;
+    margin-right: 10px;
+}
+
+#editTitleForm button, #addParagraph button {
+    padding: 8px 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+#editTitleForm button:hover, #addParagraph button:hover {
+    background-color: #0056b3;
+}
+
+.paragraph-section {
+    margin-top: 20px;
+    padding: 10px 0;
+    border-top: 1px solid #ced4da;
+}
+
+.paragraph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paragraph-header h2 {
+    margin: 0;
+}
+
+.paragraph-header a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.paragraph-header a:hover {
+    text-decoration: underline;
+}
+
+.paragraph-content {
+    margin-top: 10px;
+    font-size: 1em;
+}

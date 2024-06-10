@@ -3,77 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${article.title}">Article</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/articleStyles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/article.js" defer></script>
-    <style>
-        .hidden {
-            display: none;
-        }
-        .article-title {
-            display: grid;
-            place-items: center;
-        }
-        .title-container {
-            margin-right: 10px;
-        }
-
-        .navigation {
-
-        }
-
-        .search-form {
-            display: inline-flex;
-        }
-
-
-    </style>
 </head>
 <body>
-<div class="navigation">
-    <div class="search">
-        <form class = "search-form" action="/searchForArticle" method="get">
-            <div class="search-input">
-                <input type="text" id = "articleTitle" name="title" placeholder="Search on FreeWiki" aria-label="Search on FreeWiki">
-            </div>
-            <div class="search-button">
-                <button type="submit"> Search</button>
-            </div>
+<div class="article-page">
+    <div class="navigation">
+        <div class="search">
+            <form class="search-form" action="/searchForArticle" method="get">
+                <div class="search-input">
+                    <input type="text" id="articleTitle" name="title" placeholder="Search on FreeWiki" aria-label="Search on FreeWiki">
+                </div>
+                <div class="search-button">
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+        </div>
 
+        <div class="account-manager">
+            <div th:if="${username != null}">
+                <a th:href="@{/profile.html}" th:text="${username}"></a>
+            </div>
+            <div th:unless="${username != null}">
+                <div class="login-div">
+                    <a href="/login.html">Log in</a>
+                </div>
+                <div class="create-account-div">
+                    <a href="/createAccount.html">Create account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="article-title" class="article-title">
+        <div class="title-container">
+            <h1 th:text="${article.title}">Article Title</h1>
+            <button id="editTitleButton">Edit Title</button>
+        </div>
+        <form id="editTitleForm" action="/changeArticleTitle" method="post" class="hidden">
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <label for="title">New Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter new title">
+            <button type="submit">Save title</button>
+        </form>
+        <form id="addParagraph" action="/addNewParagraph" method="post">
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <input type="text" id="paragraphType" name="paragraphType" placeholder="Enter title of new Paragraph">
+            <button type="submit">Add paragraph</button>
         </form>
     </div>
-    <div class="account-manager">
-
-    </div>
-</div>
-
-<div id="article-title" class="article-title">
-    <div class="title-container">
-        <h1 th:text="${article.title}">Article Title</h1>
-        <button id="editTitleButton">Edit Title</button>
-    </div>
-    <form id="editTitleForm" action="/changeArticleTitle" method="post" class="hidden">
-        <input type="hidden" name="articleId" th:value="${article.id}">
-        <label for="title">New Title:</label>
-        <input type="text" id="title" name="title" placeholder="Enter new title">
-        <button type="submit">Save title</button>
-    </form>
-    <form id="addParagraph" action="/addNewParagraph" method="post">
-        <input type="hidden" name="articleId" th:value="${article.id}">
-        <input type="text" id="paragraphType" name="paragraphType" placeholder="Enter title of new Paragraph">
-        <button type="submit">Add paragraph</button>
-    </form>
-</div>
-
-<div id = "paragraphs" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
-    <div class="paragraph-header">
-        <h2 th:text="'Paragraph ' + ${paragraph.type}"></h2>
-        <a th:href="@{/editParagraph(paragraphId=${paragraph.id}, articleId=${article.id})}" title="Edit ${paragraph.type}">
-            <span>edit</span>
-        </a>
-    </div>
-    <div th:attr="id='paragraphContent' + ${paragraph.id}">
-        <p class th:text="${paragraph.content}"></p>
+    <div id="paragraphs" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
+        <div class="paragraph-header">
+            <h2 th:text="'Paragraph ' + ${paragraph.type}"></h2>
+            <a th:href="@{/editParagraph(paragraphId=${paragraph.id}, articleId=${article.id})}" title="Edit ${paragraph.type}">
+                <span>edit</span>
+            </a>
+        </div>
+        <div class="paragraph-content" th:attr="id='paragraphContent' + ${paragraph.id}">
+            <p class="paragraph-content" th:text="${paragraph.content}"></p>
+        </div>
     </div>
 </div>
 </body>
