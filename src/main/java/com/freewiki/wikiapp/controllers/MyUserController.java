@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@RequestMapping("/user")
 public class MyUserController {
 
     @Autowired
@@ -26,12 +27,11 @@ public class MyUserController {
         this.myUserService = myUserService;
     }
 
-   @GetMapping("/login")
-    public String getUser(@RequestParam String username, @RequestParam String password,
-                          final Model model, HttpServletRequest request) {
+    @GetMapping("/login")
+    public String getUser(@RequestParam String username, @RequestParam String password, final Model model,
+                          HttpSession session) {
         try {
             MyUser myUserToLogIn = myUserService.checkLogin(username, password);
-            HttpSession session = request.getSession();
             session.setAttribute("username", username);
             model.addAttribute("username", myUserToLogIn.getUsername());
             model.addAttribute("id", myUserToLogIn.getId());
@@ -55,11 +55,16 @@ public class MyUserController {
         return "welcome";
     }
 
+    @GetMapping("/logout")
+    public String logOut(HttpSession session) {
+        session.removeAttribute("username");
+        return "redirect:/index.html";
+    }
+
     /*@GetMapping("/welcome")
     public String welcomePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
-        model.addAttribute("username", currentUserName);
-        return "welcome";
-    } */
+        Jmodel.addAttribute("username", currentUserName);
+        return "welcome"; } */
 }

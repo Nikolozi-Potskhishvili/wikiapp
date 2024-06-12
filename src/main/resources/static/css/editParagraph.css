@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #202122;
+}
+
+.page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.paragraph-title-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.paragraph-title h3 {
+    margin: 0;
+    font-size: 1.5em;
+}
+.paragraph-title-edit-form {
+    display: flex;
+}
+
+.paragraph-title-edit-input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+.paragraph-title-edit-text {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.paragraph-editor-text-ui {
+    margin-top: 20px;
+    padding: 10px 0;
+    border-top: 1px solid #ced4da;
+}
+
+.paragraph-edit-textbook {
+    width: 100%;
+    height: 750px;
+    margin-top: 10px;
+    font-size: 1em;
+    resize: none;
+}
+
+button {
+    padding: 8px 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+.delete-button {
+    background-color: #dc3545;
+} 
+.delete-button:hover {
+    background-color: #c82333;
+}
