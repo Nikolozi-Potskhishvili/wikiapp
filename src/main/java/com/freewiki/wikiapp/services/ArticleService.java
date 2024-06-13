@@ -62,4 +62,9 @@ public class ArticleService {
         articleRepository.save(article);
         return article;
     }
+
+    public boolean checkAuthor(long userId, long articleId) {
+        Article article = findArticleById(articleId);
+        return article.getAuthor().getId().equals(userId);
+    }
 }

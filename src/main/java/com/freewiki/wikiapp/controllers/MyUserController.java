@@ -33,6 +33,7 @@ public class MyUserController {
         try {
             MyUser myUserToLogIn = myUserService.checkLogin(username, password);
             session.setAttribute("username", username);
+            session.setAttribute("userId", myUserToLogIn.getId());
             model.addAttribute("username", myUserToLogIn.getUsername());
             model.addAttribute("id", myUserToLogIn.getId());
             return "welcome";
@@ -58,7 +59,7 @@ public class MyUserController {
     @GetMapping("/logout")
     public String logOut(HttpSession session) {
         session.removeAttribute("username");
-        return "redirect:/index.html";
+        return "redirect:/mainPage.html";
     }
 
     /*@GetMapping("/welcome")

@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
     <script src="/js/hashPassword.js" defer></script>
 </head>
 <body>
-    <h3>Please log in</h3>
-    <form action="user/login" method="get">
-        <label for="username"> username: </label> <br/>
-        <input type="text" id="username" name="username" required> <br/>
+    <div class="login-page">
+        <div class="login-page-title">
+            <h3>Please log in</h3>
+        </div>
+        <div class="login-page-form-div">
+            <form class="login-page-form" action="user/login" method="get">
+                <label for="username"> Please enter username: </label> <br/>
+                <input type="text" id="username" name="username" required> <br/>
 
-        <label for="password"> password: </label> <br/>
-        <input type="password" id="password" name="password" required> <br/>
+                <label for="password"> Please enter password: </label> <br/>
+                <input type="password" id="password" name="password" required> <br/>
 
-        <button type="submit" onclick="hashPassword()"> Login</button>
-    </form>
+                <button type="submit" onclick="hashPassword()"> Login</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

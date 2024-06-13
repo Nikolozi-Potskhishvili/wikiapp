@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/welcome.css">
 </head>
 <body>
-<h1>Welcome, <span th:text="${username}">User</span>!</h1>
-<form action="/createNewArticle" method="post">
-    <label for="title"> Enter Title </label>
-    <input type="text" id = "title" name="title">
-    <input type="hidden" id = "user_id" name="user_id" th:value="${id}">
-    <button type="submit"> Create New Article</button>
+<div class="container">
+    <h1>Welcome, <span th:text="${username}">User</span>!</h1>
+    <form action="/createNewArticle" method="post" class="create-article-form">
+        <label for="title">Enter Title</label>
+        <input type="text" id="title" name="title" required>
+        <input type="hidden" id="user_id" name="user_id" th:value="${id}">
+        <button type="submit">Create New Article</button>
+    </form>
     <div class="search">
         <form class="search-form" action="/searchForArticle" method="get">
             <div class="search-input">
-                <input type="text" id="articleTitle" name="title" placeholder="Search on FreeWiki" aria-label="Search on FreeWiki">
+                <input type="text" id="articleTitle" name="title" placeholder="Search on FreeWiki" aria-label="Search on FreeWiki" required>
             </div>
             <div class="search-button">
                 <button type="submit">Search</button>
             </div>
         </form>
     </div>
-</form>
+</div>
 </body>
 </html>

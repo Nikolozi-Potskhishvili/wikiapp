@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${title}"></title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title th:text="${title}">Search Results</title>
+    <link rel="stylesheet" type="text/css" href="/css/searchResult.css">
 </head>
 <body>
-<div th:each="article : ${articles}">
-    <a th:href="@{'/article/' + ${article.id}}" th:text="${article.title}"></a>
+<div class="page">
+    <h1 th:text="${title}">Search Results</h1>
+    <div class="results">
+        <div th:each="article : ${articles}" class="result-item">
+            <a th:href="@{'/article/' + ${article.id}}" th:text="${article.title}" class="result-link"></a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

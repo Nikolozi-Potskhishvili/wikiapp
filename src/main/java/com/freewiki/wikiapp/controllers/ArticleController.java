@@ -3,11 +3,14 @@ package com.freewiki.wikiapp.controllers;
 import com.freewiki.wikiapp.model.Article;
 import com.freewiki.wikiapp.model.Paragraph;
 import com.freewiki.wikiapp.model.MyUser;
+import com.freewiki.wikiapp.requests.IsAuthorRequest;
+import com.freewiki.wikiapp.responses.IsAuthorResponse;
 import com.freewiki.wikiapp.services.ArticleService;
 import com.freewiki.wikiapp.services.ParagraphService;
 import com.freewiki.wikiapp.services.MyUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
@@ -66,6 +69,16 @@ public class ArticleController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseBody);
+    }
+
+    @PostMapping("/isAuthor")
+    @ResponseBody
+    public IsAuthorResponse isAuthor(@RequestBody IsAuthorRequest request) {
+        long userId = request.getUserId();
+        long articleId = request.getArticleId();
+
+        boolean checkResult = articleService.checkAuthor(userId, articleId);
+        return checkResult ? IsAuthorResponse.ok() : IsAuthorResponse.notFound();
     }
 
     @PostMapping("/addNewParagraph")
