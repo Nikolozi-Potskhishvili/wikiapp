@@ -10,6 +10,7 @@
         const isLoggedIn = /*[[${session.username != null}]]*/ false;
         const articleId = /*[[${article.id}]]*/ 0;
         const userId = /*[[${session.userId}]]*/ 0;
+        let editable = true;
     </script>
 </head>
 <body>
@@ -28,7 +29,7 @@
         <div class="account-manager">
             <div th:if="${session.username != null}">
                 <div class="profile-href">
-                    <a href="profile.html" th:text="${session.username}"></a>
+                    <a href="/user/profile" th:text="${session.username}"></a>
                 </div>
                 <div class="logout-href">
                     <a th:href="@{/user/logout}">Log out</a>

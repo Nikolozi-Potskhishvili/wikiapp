@@ -2,17 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:value="${username}"></title>
+    <title th:value="${session.username}"></title>
     <link rel="stylesheet" type="text/css" href="/css/profile.css">
 </head>
 <body>
-    <div class="user-profile">
-        <div class="user-info">
-            <textarea class="username-textarea" th:field="${username}"></textarea>
-            <div class="user-article-list">
-                <div th:each="article : ${articles}">
-                    <a th:href="@{'/article/' + ${article.id}}" th:text="${article.title}"></a>
+    <div class="user-profile-page">
+        <div class="navigation">
+            <div class="search">
+                <form class="search-form" action="/searchForArticle" method="get">
+                    <div class="search-input">
+                        <input type="text" id="articleTitle" name="title" placeholder="Search on FreeWiki" aria-label="Search on FreeWiki">
+                    </div>
+                    <div class="search-button">
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="account-manager">
+                <div class="logout-href">
+                    <a th:href="@{/user/logout}">Log out</a>
                 </div>
+            </div>
+        </div>
+        <div class="user-info">
+            <h1 class="username" th:text="${session.username}"></h1>
+                <div class="article-list">
+                    <div th:each="article : ${user.getArticles()}" class="article-list-item">
+                        <a th:href="@{'/article/' + ${article.id}}" th:text="${article.title}" class="article-list-link"></a>
+                    </div>
             </div>
         </div>
     </div>

@@ -22,39 +22,42 @@ $(document).ready(function() {
     console.log(isLoggedIn);
     console.log(articleId);
     console.log(userId);
+
+
     $("#editArticleButton").click(function() {
-        if (!isLoggedIn) {
-            showPopup("Please log in to edit the article.");
-        } else {
-            $.ajax({
-                url: "/isAuthor",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({ userId: userId, articleId: articleId }),
-                success: function(response) {
-                    if (response.success) {
-                        $(".edit-buttons").removeClass("hidden");
-                        $("#editTitleForm").removeClass("hidden");
-                        $("#addParagraph").removeClass("hidden");
-                    } else {
-                        showPopup("You are not the author of this article.");
+        editable = !editable;
+        if (editable) {
+            if (!isLoggedIn) {
+                showPopup("Please log in to edit the article.");
+            } else {
+                $.ajax({
+                    url: "/isAuthor",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({userId: userId, articleId: articleId}),
+                    success: function (response) {
+                        if (response.success) {
+                            $(".edit-buttons").removeClass("hidden");
+                            $("#editTitleForm").removeClass("hidden");
+                            $("#addParagraph").removeClass("hidden");
+                        } else {
+                            showPopup("You are not the author of this article.");
+                        }
+                    },
+                    error: function () {
+                        showPopup("An error occurred. Please try again later.");
                     }
-                },
-                error: function() {
-                    showPopup("An error occurred. Please try again later.");
-                }
-            });
+                });
+            }
+        } else {
+            $(".edit-buttons").addClass("hidden");
+            $("#editTitleForm").addClass("hidden");
+            $("#addParagraph").addClass("hidden");
         }
     });
 
     $("#closePopup").click(function() {
         hidePopup();
-    });
-
-    $("editArticleButton").click(function () {
-        $(".edit-buttons").addClass("hidden");
-        $("#editTitleForm").addClass("hidden");
-        $("#addParagraph").addClass("hidden");
     });
 
     function showPopup(message) {

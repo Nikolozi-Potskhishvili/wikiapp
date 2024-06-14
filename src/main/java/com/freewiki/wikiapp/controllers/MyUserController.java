@@ -62,6 +62,13 @@ public class MyUserController {
         return "redirect:/mainPage.html";
     }
 
+    @GetMapping("/profile")
+    public String getProfile(HttpSession session, final  Model model) {
+       MyUser myUser = myUserService.getUserById((Long) session.getAttribute("userId"));
+       model.addAttribute("user", myUser);
+       return "profile";
+    }
+
     /*@GetMapping("/welcome")
     public String welcomePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

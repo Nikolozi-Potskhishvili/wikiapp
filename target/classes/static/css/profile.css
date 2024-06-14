@@ -7,10 +7,79 @@ body {
     color: #202122;
 }
 
-.page {
+.user-profile-page {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.article-list-item {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    transition: background-color 0.3s;
+}
+
+.article-list:hover {
+    background-color: #dee2e6;
+}
+
+.article-list-link {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.article-list-link:hover {
+    text-decoration: underline;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    flex-grow: 1;
+}
+
+.search-input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.search-input input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.search-button button {
+    padding: 8px 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.search-button button:hover {
+    background-color: #0056b3;
+}
+
+.account-manager {
+    align-self: center;
 }
