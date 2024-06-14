@@ -71,5 +71,3 @@ Please note that due to the lack of moderation, content on FreeWikiApp may not a
 This is an ongoing project, and we're actively working on improvements. Feel free to reach out with suggestions or feedback!
 
 **I hope this helps!**
-
-Remember to replace `"https://github.com/your-username/FreeWikiApp.git"` with the actual URL of your GitHub repository.  Also, update the instructions for running the application based on your specific project setup.
