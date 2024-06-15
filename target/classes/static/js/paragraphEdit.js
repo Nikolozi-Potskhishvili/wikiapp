@@ -23,7 +23,7 @@ function returnToArticle(articleId) {
     window.location.href = `/article/` + articleId;
 }
 function saveParagraph(articleId, paragraphId) {
-    let newContent = document.getElementById('editParagraphInput').value;
+    let newContent = document.getElementById('paragraph-edit-textbook').textContent;
     console.log('Paragraph ID:', paragraphId);
     console.log('Article ID:', articleId);
     //document.getElementById('paragraphContent').textContent = newContent;

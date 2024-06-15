@@ -20,15 +20,6 @@ public class Article {
     @JoinColumn(name = "author_id")
     private MyUser author;
 
-    public List<Paragraph> getParagraphs() {
-        return paragraphs;
-    }
-
-    public void setParagraphs(List<Paragraph> paragraphs) {
-        this.paragraphs = paragraphs;
-    }
-
-
     @ManyToOne
     @JoinColumn(name = "forked_from_id")
     private Article forkedFrom;
@@ -37,7 +28,15 @@ public class Article {
     private Date createdAt;
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Paragraph> paragraphs = new LinkedList<>();
+    private List<Section> sections = new LinkedList<>();
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
 
     @PrePersist
     protected void onCreate() {

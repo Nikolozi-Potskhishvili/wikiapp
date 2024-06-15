@@ -36,9 +36,9 @@ public class ParagraphService {
         throw new IllegalArgumentException("No paragraph with id " + id + " exists");
     }
 
-    public Paragraph changeParagraphType(long paragraphId, String type) {
+    public Paragraph changeParagraphType(long paragraphId, String title) {
         Paragraph paragraph = findById(paragraphId);
-        paragraph.setType(type);
+        paragraph.setTitle(title);
         paragraphRepository.save(paragraph);
         return paragraph;
     }

@@ -41,6 +41,7 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+/*
     public Article addNewParagraph(long articleId, String type) {
         Article article = findArticleById(articleId);
 
@@ -55,13 +56,14 @@ public class ArticleService {
         articleRepository.save(article);
         return article;
     }
+*/
 
-    public Article deleteParagraph(long articleId, long paragraphId) {
+  /*  public Article deleteParagraph(long articleId, long paragraphId) {
         Article article = findArticleById(articleId);
         article.getParagraphs().removeIf(paragraph -> paragraph.getId().equals(paragraphId));
         articleRepository.save(article);
         return article;
-    }
+    }*/
 
     public boolean checkAuthor(long userId, long articleId) {
         Article article = findArticleById(articleId);
