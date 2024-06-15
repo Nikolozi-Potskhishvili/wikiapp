@@ -54,17 +54,17 @@ cd wikiapp
 **Features**
 
 * Users can create and edit articles.
-* Articles support a simple markup language for:
+* Articles support a simple markup language for(WIP):
     * Hyperlinks to other wiki pages using `[[link text|URL]]`.
     * Image placement with `[image left]|{{image path}}|[image right]`.
 
 **Contributing**
 
-We welcome contributions to FreeWikiApp! Please feel free to create pull requests with your improvements or bug fixes.
+We welcome contributions to freewiki! Please feel free to create pull requests with your improvements or bug fixes.
 
 **Disclaimer**
 
-Please note that due to the lack of moderation, content on FreeWikiApp may not always be accurate or reliable. Use your judgment when evaluating information found here.
+Please note that due to the lack of moderation, content on freewiki may not always be accurate or reliable. Use your judgment when evaluating information found here.
 
 **Stay Tuned!**
 
