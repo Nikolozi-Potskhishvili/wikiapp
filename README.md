@@ -1,5 +1,4 @@
-No problem, here's an updated README file considering your use of Java Spring, Javascript, CSS, and HTML:
-
+  
 ## FreeWikiApp
 
 **Welcome to FreeWikiApp!** 
