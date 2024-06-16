@@ -57,13 +57,12 @@
         </div>
         <div id="paragraphs" th:each="paragraph : ${section.paragraphs}" class="paragraph-section">
             <div class="paragraph-header">
-                <h2 th:text="'Paragraph ' + ${paragraph.title}"></h2>
+                <h2 th:text="${paragraph.title}"></h2>
             </div>
             <div class="paragraph-content" th:attr="id='paragraphContent' + ${paragraph.id}">
                     <div th:utext="${paragraph.parsedText}"></div>
             </div>
         </div>
-  =
     </div>
     <div id="popup" class="hidden">
         <div id="popupContent">

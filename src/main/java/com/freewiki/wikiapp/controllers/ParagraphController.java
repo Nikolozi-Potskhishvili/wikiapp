@@ -1,6 +1,5 @@
 package com.freewiki.wikiapp.controllers;
 
-import com.freewiki.wikiapp.model.Article;
 import com.freewiki.wikiapp.model.Paragraph;
 import com.freewiki.wikiapp.requests.ParagraphUpdateRequest;
 import com.freewiki.wikiapp.services.ArticleService;
@@ -27,23 +26,27 @@ public class ParagraphController {
         this.articleService = articleService;
     }
     @GetMapping("/editParagraph")
-    public String editParagraph(@RequestParam("articleId") Long articleId,
-                                @RequestParam("paragraphId") Long paragraphId, Model model) {
+    public String editParagraph(@RequestParam("sectionId") Long sectionId,
+                                @RequestParam("paragraphId") Long paragraphId,
+                                @RequestParam("articleId") Long articleId,
+                                final Model model) {
         Paragraph paragraph = paragraphService.findById(paragraphId);
         model.addAttribute("paragraph", paragraph);
+        model.addAttribute("sectionId", sectionId);
         model.addAttribute("articleId", articleId);
         return "editParagraph";
     }
 
-    @PostMapping("/changeParagraphType")
-    public String changeParagraphType(@RequestParam("articleId") long articleId,
-                                      @RequestParam("paragraphId") long paragrahpId,
-                                      @RequestParam("type") String type,
+
+    @PostMapping("/changeParagraphTitle")
+    public String changeParagraphTitle(@RequestParam("articleId") long articleId,
+                                      @RequestParam("paragraphId") long paragraphId,
+                                      @RequestParam("title") String title,
                                       final Model model) {
-        Paragraph paragraph = paragraphService.changeParagraphType(paragrahpId, type);
+        Paragraph paragraph = paragraphService.changeParagraphTitle(paragraphId, title);
         model.addAttribute("articleId", articleId);
         model.addAttribute("paragraph", paragraph);
-        return "editParagraph";
+        return "redirect:/editParagraph?sectionId=" +  paragraph.getSection().getId() + "&paragraphId=" + paragraphId + "&articleId=" + articleId;
     }
 
     @PostMapping("/updateParagraph")

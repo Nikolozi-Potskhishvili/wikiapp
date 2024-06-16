@@ -1,31 +1,25 @@
-function deleteParagraph(articleId, paragraphId) {
-    fetch("/deleteParagraph", {
+function deleteParagraph(articleId, paragraphId, sectionId) {
+    fetch(fetch(`/deleteParagraph?articleId=${articleId}&paragraphId=${paragraphId}&sectionId=${sectionId}`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            articleId: articleId,
-            paragraphId: paragraphId
-        })
     }).then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        window.location.href = `/article/` + articleId;
-    })
-        .catch(error => {
+            if(response.ok) {
+                returnToArticle(articleId)
+            } else {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+    }).catch(error => {
             console.error('There was a problem with the fetch operation:', error);
-        });
+        }));
 }
 
 function returnToArticle(articleId) {
-    window.location.href = `/article/` + articleId;
+    window.location.href = "/editArticle/" + articleId;
 }
-function saveParagraph(articleId, paragraphId) {
-    let newContent = document.getElementById('paragraph-edit-textbook').textContent;
+function saveParagraph(articleId, paragraphId, sectionId) {
+    let newContent = document.getElementById('paragraph-edit-textbook').value;
     console.log('Paragraph ID:', paragraphId);
     console.log('Article ID:', articleId);
+    console.log('newContent:', newContent);
     //document.getElementById('paragraphContent').textContent = newContent;
     //document.getElementById('paragraphContent').style.display = 'block';
     //document.getElementById('editParagraph').style.display = 'none';
@@ -43,7 +37,7 @@ function saveParagraph(articleId, paragraphId) {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
-        window.location.href = `/article/` + articleId;
+        returnToArticle(articleId)
     })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);

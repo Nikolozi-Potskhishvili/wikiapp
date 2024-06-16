@@ -19,9 +19,6 @@ public class ParagraphService {
         return paragraphRepository.save(paragraph);
     }
 
-    public Long getArticleId(long paragraphId) {
-        return paragraphRepository.findById(paragraphId).get().getArticle().getId();
-    }
 
     public Paragraph updateParagraph(long id, String content) {
         Paragraph paragraphToUpdate = findById(id);
@@ -36,7 +33,7 @@ public class ParagraphService {
         throw new IllegalArgumentException("No paragraph with id " + id + " exists");
     }
 
-    public Paragraph changeParagraphType(long paragraphId, String title) {
+    public Paragraph changeParagraphTitle(long paragraphId, String title) {
         Paragraph paragraph = findById(paragraphId);
         paragraph.setTitle(title);
         paragraphRepository.save(paragraph);

@@ -9,11 +9,10 @@ import com.freewiki.wikiapp.responses.IsAuthorResponse;
 import com.freewiki.wikiapp.services.ArticleService;
 import com.freewiki.wikiapp.services.ParagraphService;
 import com.freewiki.wikiapp.services.MyUserService;
+import com.freewiki.wikiapp.services.SectionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +23,13 @@ import java.util.stream.Collectors;
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
-    private final ParagraphService paragraphService;
+    private final SectionService sectionService;
     private final MyUserService myUserService;
 
     @Autowired
-    public ArticleController(ArticleService articleService, ParagraphService paragraphService, MyUserService myUserService) {
+    public ArticleController(ArticleService articleService, ParagraphService paragraphService, SectionService sectionService, MyUserService myUserService) {
         this.articleService = articleService;
-        this.paragraphService = paragraphService;
+        this.sectionService = sectionService;
         this.myUserService = myUserService;
     }
 
@@ -80,22 +79,28 @@ public class ArticleController {
         return checkResult ? IsAuthorResponse.ok() : IsAuthorResponse.notFound();
     }
 
- /*   @PostMapping("/addNewParagraph")
-    public String addNewParagraph(@RequestParam("articleId") long articleId,
-                                  @RequestParam("paragraphType") String type,
-                                  final Model model) {
-        Article article = articleService.addNewParagraph(articleId, type);
-        model.addAttribute("article", article);
-        return "articleEdit";
-    }
-*/
     @PostMapping("/changeArticleTitle")
     public String changeArticleName(@RequestParam("articleId") long articleId,
                                             @RequestParam("title") String title, final Model model) {
         Article article = articleService.changeTitle(articleId, title);
-        model.addAttribute("article", article);
-        return "articleEdit";
+        return "redirect:/editArticle/" + articleId;
     }
+
+    @GetMapping("/editArticle/{articleId}")
+    public String getArticleEditPage(@PathVariable("articleId") long articleId, final Model model,
+                                     HttpServletRequest request) {
+        Article article = articleService.findArticleById(articleId);
+        List<Section> sortedSections = article.getSections().stream()
+                .sorted(Comparator.comparingInt(Section::getArticlePosition))
+                .collect(Collectors.toList());
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        article.setSections(sortedSections);
+        model.addAttribute("article", article);
+        model.addAttribute("username", username);
+        return "articleEditMode";
+    }
+
 
     @PostMapping("/createNewArticle")
     public String createNewArticle(@RequestParam String title,
@@ -114,7 +119,6 @@ public class ArticleController {
                 Section section = new Section();
                 Paragraph emptyParagraph = new Paragraph();
                 emptyParagraph.setTitle(i + "'th paragraph");
-                emptyParagraph.setArticle(currentArticle);
                 emptyParagraph.setPosition(0);
                 emptyParagraph.setContent("This is a [[link text|http://example.com]] to check.");
                 emptyParagraph.setSection(section);
@@ -128,6 +132,24 @@ public class ArticleController {
             model.addAttribute("article", currentArticle);
             return "article";
         }
+    }
+
+    @PostMapping("/addNewSection")
+    public String addNewSection(@RequestParam("articleId") long articleId,
+                                @RequestParam("sectionTitle") String title,
+                                final Model model) {
+        Article article = articleService.addNewSections(articleId, title);
+        model.addAttribute("article", article);
+        return "redirect:/editArticle/" + articleId;
+    }
+
+    @PostMapping("/deleteSection")
+    public String addNewSection(@RequestParam("articleId") long articleId,
+                                @RequestParam("sectionId") long sectionId,
+                                final Model model) {
+        Article article = articleService.deleteSection(articleId, sectionId);
+        model.addAttribute("article", article);
+        return "redirect:/editArticle/" + articleId;
     }
 
     @GetMapping("/randomArticle")

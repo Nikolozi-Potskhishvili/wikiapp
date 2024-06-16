@@ -9,10 +9,6 @@ public class Paragraph {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "article_id", nullable = false)
-    private Article article;
-
     @Column(nullable = false)
     private String title;
 
@@ -44,14 +40,6 @@ public class Paragraph {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article articleId) {
-        this.article = articleId;
     }
 
     public String gettitle() {
