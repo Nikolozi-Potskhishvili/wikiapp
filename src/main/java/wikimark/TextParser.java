@@ -11,6 +11,8 @@ public class TextParser {
 
     }
 
+    //for media content [{placement|mediaType|text|URL|}] ex [{left|image|photo of object|URL}]
+
 
     /*
         links in the text are represented [[link text|URL]]
@@ -45,6 +47,8 @@ public class TextParser {
         return links;
     }
 
+    // [
+
     public static String getParsedText(String content) {
         StringBuilder result = new StringBuilder();
         for(int i = 0; i < content.length(); i++) {
@@ -54,7 +58,6 @@ public class TextParser {
                     char cur = content.charAt(k);
                     switch (cur) {
                         case '[':
-                            if(content.charAt(k) == '[') {
                                 k++;
                                 StringBuilder htmlHref = new StringBuilder();
                                 htmlHref.append("<a href=\"");
@@ -75,9 +78,49 @@ public class TextParser {
                                     k += 2;
                                     i = k - 1;
                                 }
-                            } else {
-                                result.append("[");
+                                break;
+                        case '{':
+                            k++;
+                            StringBuilder placement = new StringBuilder();
+                            StringBuilder mediaType = new StringBuilder();
+                            StringBuilder text = new StringBuilder();
+                            StringBuilder url = new StringBuilder();
+                            // Extract placement
+                            while (k < content.length() && content.charAt(k) != '|') {
+                                placement.append(content.charAt(k));
+                                k++;
                             }
+                            k++;
+                            // Extract mediaType
+                            while (k < content.length() && content.charAt(k) != '|') {
+                                mediaType.append(content.charAt(k));
+                                k++;
+                            }
+                            k++;
+                            // Extract text
+                            while (k < content.length() && content.charAt(k) != '|') {
+                                text.append(content.charAt(k));
+                                k++;
+                            }
+                            k++;
+                            // Extract URL
+                            while (k < content.length() && !(content.charAt(k) == '}' && k + 1 < content.length() && content.charAt(k + 1) == ']')) {
+                                url.append(content.charAt(k));
+                                k++;
+                            }
+
+                            if (k + 1 < content.length() && content.charAt(k) == '}' && content.charAt(k + 1) == ']') {
+                                String htmlElement = generateMediaHtmlElement(placement.toString(), mediaType.toString(), text.toString(), url.toString());
+                                result.append(htmlElement);
+                                k += 2;
+                                i = k - 1;
+                            } else {
+                                result.append("[{").append(placement).append("|").append(mediaType).append("|").append(text).append("|").append(url).append("}");
+                            }
+                            break;
+                        default:
+                            result.append("[");
+                            break;
                     }
                 }
             } else {
@@ -86,4 +129,19 @@ public class TextParser {
         }
         return result.toString();
     }
+
+    private static String generateParagraphHtmlElement(String text) {
+        return "<p class='paragraph-part'>" + text + "</p>";
+    }
+
+    private static String generateMediaHtmlElement(String placement, String mediaType, String text, String url) {
+        return switch (mediaType) {
+            case "image" ->
+                    String.format("<div ><img class='custom-image' src='%s' alt='%s'></div>", url, text);
+            case "video" ->
+                    String.format("<div style='float: %s;'><video controls><source src='%s' type='video/mp4'>%s</video></div>", placement, url, text);
+            default -> String.format("<div style='text-align: %s;'>%s</div>", placement, text);
+        };
+    }
+
 }

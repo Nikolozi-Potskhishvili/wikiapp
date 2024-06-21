@@ -9,8 +9,7 @@ import wikimark.TextParser;
 
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-public class WikiAppApplication {
-
+public class  WikiAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WikiAppApplication.class, args);
 	}

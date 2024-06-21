@@ -26,6 +26,20 @@ body {
     margin-bottom: 20px;
 }
 
+.custom-image {
+    max-width: 100%; /* Ensure image does not overflow the container */
+    width: auto; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    margin: 10px 0; /* Add some space around the image */
+}
+
+.paragraph-content img {
+    max-width: 100%; /* Ensure image does not overflow the paragraph */
+    width: 50%; /* Limit width to 50% of the paragraph's width */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+    margin: 10px auto; /* Center the image and add some margin */
+}
 .search-form {
     display: flex;
     flex-grow: 1;

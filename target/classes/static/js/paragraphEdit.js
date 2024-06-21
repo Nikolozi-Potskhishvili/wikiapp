@@ -12,7 +12,7 @@ function deleteParagraph(articleId, paragraphId, sectionId) {
         }));
 }
 
-function returnToArticle(articleId) {
+function returnToArticle(articleId)  {
     window.location.href = "/editArticle/" + articleId;
 }
 function saveParagraph(articleId, paragraphId, sectionId) {

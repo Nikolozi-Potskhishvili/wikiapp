@@ -21,6 +21,11 @@ body {
     margin-bottom: 20px;
 }
 
+.custom-image {
+    max-width: 50%;
+    height: auto;
+}
+
 .search-form {
     display: flex;
 }
