@@ -1,0 +1,201 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.article-page {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.custom-image {
+    max-width: 50%;
+    height: auto;
+}
+
+.search-form {
+    display: flex;
+}
+
+.search-input input {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px 0 0 3px;
+}
+
+.search-button button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-left: 0;
+    background: #333;
+    color: #fff;
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+}
+
+.search-button button:hover {
+    background: #555;
+}
+
+.account-manager a {
+    margin-right: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.account-manager a:hover {
+    text-decoration: underline;
+}
+
+.article-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.article-title h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+#editTitleForm, #addSection {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#editTitleForm input[type="text"], #addSection input[type="text"] {
+    width: 60%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+#editTitleForm button, #addSection button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background: #333;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#editTitleForm button:hover, #addSection button:hover {
+    background: #555;
+}
+
+.paragraph-section {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+}
+
+.section-header h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.section-header form {
+    margin-left: 10px;
+}
+
+.section-header button {
+    padding: 5px 10px;
+    background-color: #dc3545; /* Bootstrap's danger color */
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.section-header button:hover {
+    background-color: #c82333; /* Darker shade for hover effect */
+}
+
+#edit-section-title {
+    margin-top: 10px;
+}
+
+#edit-section-title input[type="text"] {
+    width: 50%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+#edit-section-title button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background: #333;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#edit-section-title button:hover {
+    background: #555;
+}
+
+.paragraph-header h2 {
+    font-size: 1.25em;
+    margin-bottom: 10px;
+}
+
+.paragraph-content {
+    margin-top: 10px;
+}
+
+.paragraph-header a span {
+    font-size: 0.9em;
+    color: #333;
+    cursor: pointer;
+}
+
+.paragraph-header a span:hover {
+    text-decoration: underline;
+}
+
+#addParagraph {
+    margin-top: 20px;
+}
+
+#addParagraph input[type="text"] {
+    width: 60%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+#addParagraph button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background: #333;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#addParagraph button:hover {
+    background: #555;
+}

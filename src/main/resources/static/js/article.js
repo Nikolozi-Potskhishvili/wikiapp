@@ -22,11 +22,7 @@ $(document).ready(function() {
     console.log(isLoggedIn);
     console.log(articleId);
     console.log(userId);
-
-
     $("#editArticleButton").click(function() {
-        editable = !editable;
-        if (editable) {
             if (!isLoggedIn) {
                 showPopup("Please log in to edit the article.");
             } else {
@@ -37,9 +33,7 @@ $(document).ready(function() {
                     data: JSON.stringify({userId: userId, articleId: articleId}),
                     success: function (response) {
                         if (response.success) {
-                            $(".edit-buttons").removeClass("hidden");
-                            $("#editTitleForm").removeClass("hidden");
-                            $("#addParagraph").removeClass("hidden");
+                            window.location.href = `/editArticle/${articleId}`;
                         } else {
                             showPopup("You are not the author of this article.");
                         }
@@ -49,11 +43,6 @@ $(document).ready(function() {
                     }
                 });
             }
-        } else {
-            $(".edit-buttons").addClass("hidden");
-            $("#editTitleForm").addClass("hidden");
-            $("#addParagraph").addClass("hidden");
-        }
     });
 
     $("#closePopup").click(function() {

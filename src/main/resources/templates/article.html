@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${article.title}">Article</title>
+    <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/css/articleStyles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/article.js" defer></script>
@@ -50,27 +50,18 @@
             <h1 th:text="${article.title}">Article Title</h1>
             <button id="editArticleButton">Edit Article</button>
         </div>
-        <form id="editTitleForm" action="/changeArticleTitle" method="post" class="hidden">
-            <input type="hidden" name="articleId" th:value="${article.id}">
-            <label for="title">New Title:</label>
-            <input type="text" id="title" name="title" placeholder="Enter new title">
-            <button type="submit">Save title</button>
-        </form>
-        <form id="addParagraph" action="/addNewParagraph" method="post" class="hidden">
-            <input type="hidden" name="articleId" th:value="${article.id}">
-            <input type="text" id="paragraphType" name="paragraphType" placeholder="Enter title of new Paragraph">
-            <button type="submit">Add paragraph</button>
-        </form>
     </div>
-    <div id="paragraphs" th:each="paragraph : ${article.paragraphs}" class="paragraph-section">
-        <div class="paragraph-header">
-            <h2 th:text="'Paragraph ' + ${paragraph.type}"></h2>
-            <a th:href="@{/editParagraph(paragraphId=${paragraph.id}, articleId=${article.id})}" title="Edit ${paragraph.type}" class="hidden edit-buttons">
-                <span>edit</span>
-            </a>
+    <div id="sections" th:each="section : ${article.sections}" class="paragraph-section">
+        <div class="section-header">
+            <h2 th:text="'Section ' + ${section.sectionTitle}"></h2>
         </div>
-        <div class="paragraph-content" th:attr="id='paragraphContent' + ${paragraph.id}">
-            <p class="paragraph-content" th:text="${paragraph.content}"></p>
+        <div id="paragraphs" th:each="paragraph : ${section.paragraphs}" class="paragraph-section">
+            <div class="paragraph-header">
+                <h2 th:text="${paragraph.title}"></h2>
+            </div>
+            <div class="paragraph-content" th:attr="id='paragraphContent' + ${paragraph.id}">
+                    <div th:utext="${paragraph.parsedText}"></div>
+            </div>
         </div>
     </div>
     <div id="popup" class="hidden">

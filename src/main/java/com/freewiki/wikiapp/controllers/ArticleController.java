@@ -3,18 +3,16 @@ package com.freewiki.wikiapp.controllers;
 import com.freewiki.wikiapp.model.Article;
 import com.freewiki.wikiapp.model.Paragraph;
 import com.freewiki.wikiapp.model.MyUser;
+import com.freewiki.wikiapp.model.Section;
 import com.freewiki.wikiapp.requests.IsAuthorRequest;
 import com.freewiki.wikiapp.responses.IsAuthorResponse;
 import com.freewiki.wikiapp.services.ArticleService;
 import com.freewiki.wikiapp.services.ParagraphService;
 import com.freewiki.wikiapp.services.MyUserService;
+import com.freewiki.wikiapp.services.SectionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +23,13 @@ import java.util.stream.Collectors;
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
-    private final ParagraphService paragraphService;
+    private final SectionService sectionService;
     private final MyUserService myUserService;
 
     @Autowired
-    public ArticleController(ArticleService articleService, ParagraphService paragraphService, MyUserService myUserService) {
+    public ArticleController(ArticleService articleService, ParagraphService paragraphService, SectionService sectionService, MyUserService myUserService) {
         this.articleService = articleService;
-        this.paragraphService = paragraphService;
+        this.sectionService = sectionService;
         this.myUserService = myUserService;
     }
 
@@ -47,18 +45,18 @@ public class ArticleController {
     public String getArticle(@PathVariable("id") long id, final Model model,
                              HttpServletRequest request) {
         Article article = articleService.findArticleById(id);
-        List<Paragraph> sortedParagraphs = article.getParagraphs().stream()
-                .sorted(Comparator.comparingInt(Paragraph::getPosition))
+        List<Section> sortedSections = article.getSections().stream()
+                .sorted(Comparator.comparingInt(Section::getArticlePosition))
                 .collect(Collectors.toList());
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
-        article.setParagraphs(sortedParagraphs);
+        article.setSections(sortedSections);
         model.addAttribute("article", article);
         model.addAttribute("username", username);
         if(article != null) return "article";
         return null;
     }
-
+/*
     @PostMapping("/deleteParagraph")
     public ResponseEntity<Map<String, String>> deleteParagraph(@RequestBody Map<String, Long> requestData) {
         long articleId = requestData.get("articleId");
@@ -69,7 +67,7 @@ public class ArticleController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseBody);
-    }
+    }*/
 
     @PostMapping("/isAuthor")
     @ResponseBody
@@ -81,29 +79,35 @@ public class ArticleController {
         return checkResult ? IsAuthorResponse.ok() : IsAuthorResponse.notFound();
     }
 
-    @PostMapping("/addNewParagraph")
-    public String addNewParagraph(@RequestParam("articleId") long articleId,
-                                  @RequestParam("paragraphType") String type,
-                                  final Model model) {
-        Article article = articleService.addNewParagraph(articleId, type);
-        model.addAttribute("article", article);
-        return "article";
-    }
-
     @PostMapping("/changeArticleTitle")
     public String changeArticleName(@RequestParam("articleId") long articleId,
                                             @RequestParam("title") String title, final Model model) {
         Article article = articleService.changeTitle(articleId, title);
-        model.addAttribute("article", article);
-        return "article";
+        return "redirect:/editArticle/" + articleId;
     }
+
+    @GetMapping("/editArticle/{articleId}")
+    public String getArticleEditPage(@PathVariable("articleId") long articleId, final Model model,
+                                     HttpServletRequest request) {
+        Article article = articleService.findArticleById(articleId);
+        List<Section> sortedSections = article.getSections().stream()
+                .sorted(Comparator.comparingInt(Section::getArticlePosition))
+                .collect(Collectors.toList());
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        article.setSections(sortedSections);
+        model.addAttribute("article", article);
+        model.addAttribute("username", username);
+        return "articleEditMode";
+    }
+
 
     @PostMapping("/createNewArticle")
     public String createNewArticle(@RequestParam String title,
                                    final Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
-        if(username == null) {
+        if(!(session.getAttribute(username) == null)) {
             return "redirect:/login";
         } else {
             String[] paragraphTypes = {"Summary", "Body", "References"};
@@ -112,17 +116,40 @@ public class ArticleController {
             currentArticle.setAuthor(currnetMyUser);
             currentArticle.setTitle(title);
             for (int i = 1; i <= 3; i++) {
-                Paragraph paragraph = new Paragraph();
-                paragraph.setArticle(currentArticle);
-                paragraph.setType(paragraphTypes[i - 1]);
-                paragraph.setContent("");
-                paragraph.setPosition(i);
-                currentArticle.getParagraphs().add(paragraph);
+                Section section = new Section();
+                Paragraph emptyParagraph = new Paragraph();
+                emptyParagraph.setTitle(i + "'th paragraph");
+                emptyParagraph.setPosition(0);
+                emptyParagraph.setContent("This is a [[link text|http://example.com]] to check.");
+                emptyParagraph.setSection(section);
+                section.getParagraphs().add(emptyParagraph);
+                section.setArticle(currentArticle);
+                section.setSectionTitle(paragraphTypes[i - 1]);
+                section.setArticlePosition(i);
+                currentArticle.getSections().add(section);
             }
             articleService.saveNewArticle(currentArticle);
             model.addAttribute("article", currentArticle);
             return "article";
         }
+    }
+
+    @PostMapping("/addNewSection")
+    public String addNewSection(@RequestParam("articleId") long articleId,
+                                @RequestParam("sectionTitle") String title,
+                                final Model model) {
+        Article article = articleService.addNewSections(articleId, title);
+        model.addAttribute("article", article);
+        return "redirect:/editArticle/" + articleId;
+    }
+
+    @PostMapping("/deleteSection")
+    public String addNewSection(@RequestParam("articleId") long articleId,
+                                @RequestParam("sectionId") long sectionId,
+                                final Model model) {
+        Article article = articleService.deleteSection(articleId, sectionId);
+        model.addAttribute("article", article);
+        return "redirect:/editArticle/" + articleId;
     }
 
     @GetMapping("/randomArticle")

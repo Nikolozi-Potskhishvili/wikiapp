@@ -59,7 +59,7 @@ public class MyUserController {
     @GetMapping("/logout")
     public String logOut(HttpSession session) {
         session.removeAttribute("username");
-        return "redirect:/mainPage.html";
+        return "redirect:/index.html";
     }
 
     @GetMapping("/profile")

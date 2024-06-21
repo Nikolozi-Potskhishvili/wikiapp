@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="/css/articleStyles.css">
+    <title th:text="${article.title}">Article</title>
+    <link rel="stylesheet" type="text/css" href="/css/editArticle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/article.js" defer></script>
     <script th:inline="javascript">
@@ -48,26 +48,48 @@
     <div id="article-title" class="article-title">
         <div class="title-container">
             <h1 th:text="${article.title}">Article Title</h1>
-            <button id="editArticleButton">Edit Article</button>
         </div>
+        <form id="editTitleForm" action="/changeArticleTitle" method="post">
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <label for="title">New Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter new title">
+            <button type="submit">Save title</button>
+        </form>
+        <form id="addSection" action="/addNewSection" method="post">
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <input type="text" id="sectionTitle" name="sectionTitle" placeholder="Enter title of new section">
+            <button type="submit">Add section</button>
+        </form>
     </div>
     <div id="sections" th:each="section : ${article.sections}" class="paragraph-section">
         <div class="section-header">
             <h2 th:text="'Section ' + ${section.sectionTitle}"></h2>
+            <form id="delete-section" th:action="@{/deleteSection(articleId=${article.id}, sectionId=${section.id})}" method="post">
+                <button type="submit">Delete Section</button>
+            </form>
         </div>
+        <form id="edit-section-title" action="/changeSectionTitle" method="post">
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <input type="hidden" name="sectionId" th:value="${section.id}">
+            <input type="text" id="section-title" name="newTitle" placeholder="New Section title">
+            <button type="submit">Save title</button>
+        </form>
+        <form id="addParagraph" action="/addNewParagraph" method="post">
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <input type="hidden" name="sectionId" th:value="${section.id}">
+            <input type="text" id="paragraphTitle" name="paragraphTitle" placeholder="Enter title of new Paragraph">
+            <button type="submit">Add paragraph</button>
+        </form>
         <div id="paragraphs" th:each="paragraph : ${section.paragraphs}" class="paragraph-section">
             <div class="paragraph-header">
-                <h2 th:text="${paragraph.title}"></h2>
+                <h2 th:text="'Paragraph ' + ${paragraph.title}"></h2>
+                <a th:href="@{/editParagraph(paragraphId=${paragraph.id}, sectionId=${section.id}, articleId=${article.id})}">
+                    <span>edit</span>
+                </a>
             </div>
             <div class="paragraph-content" th:attr="id='paragraphContent' + ${paragraph.id}">
-                    <div th:utext="${paragraph.parsedText}"></div>
+                <div th:utext="${paragraph.parsedText}"></div>
             </div>
-        </div>
-    </div>
-    <div id="popup" class="hidden">
-        <div id="popupContent">
-            <p id="popupMessage"></p>
-            <button id="closePopup">Close</button>
         </div>
     </div>
 </div>
