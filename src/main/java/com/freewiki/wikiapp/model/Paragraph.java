@@ -1,7 +1,7 @@
 package com.freewiki.wikiapp.model;
 
 import jakarta.persistence.*;
-import wikimark.TextParser;
+import com.freewiki.wikiapp.wikimark.TextParser;
 
 @Entity
 @Table(name = "paragraphs")

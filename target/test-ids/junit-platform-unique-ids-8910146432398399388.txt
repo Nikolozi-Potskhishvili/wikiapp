@@ -1,0 +1,2 @@
+[engine:junit-jupiter]/[class:com.freewiki.wikiapp.WikiAppApplicationTests]/[method:contextLoads()]
+[engine:junit-jupiter]/[class:UnitTests.PageRankCalculatorTest]/[method:testCalculatePageRank()]

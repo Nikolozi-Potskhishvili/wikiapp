@@ -30,6 +30,13 @@ public class Article {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Section> sections = new LinkedList<>();
 
+    @OneToMany(mappedBy = "articleFrom", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WikiHyperlink> linksFrom = new LinkedList<>();
+
+    @OneToMany(mappedBy = "articleTo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WikiHyperlink> linksTo = new LinkedList<>();
+
+
     public List<Section> getSections() {
         return sections;
     }
@@ -83,6 +90,19 @@ public class Article {
         this.createdAt = createdAt;
     }
 
+    public List<WikiHyperlink> getLinksFrom() {
+        return linksFrom;
+    }
 
+    public void setLinksFrom(List<WikiHyperlink> linksFrom) {
+        this.linksFrom = linksFrom;
+    }
 
+    public List<WikiHyperlink> getLinksTo() {
+        return linksTo;
+    }
+
+    public void setLinksTo(List<WikiHyperlink> linksTo) {
+        this.linksTo = linksTo;
+    }
 }
