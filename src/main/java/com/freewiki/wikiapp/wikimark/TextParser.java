@@ -37,8 +37,8 @@ public class TextParser {
                 }
                 k += 2;
                 WikiHyperlink wikiHyperLink = new WikiHyperlink();
-                wikiHyperLink.setLinkText(linkText.toString());
-                wikiHyperLink.setLinkUrl(linkUrl.toString());
+                wikiHyperLink.setText(linkText.toString());
+                wikiHyperLink.setUrl(linkUrl.toString());
                 links.add(wikiHyperLink);
                 i = k;
             } else {

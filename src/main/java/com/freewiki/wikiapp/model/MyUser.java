@@ -3,6 +3,7 @@ package com.freewiki.wikiapp.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -26,6 +27,9 @@ public class MyUser {
 
     @OneToMany(mappedBy = "author")
     private Set<Article> articles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UpvoteDownvote> upvoteDownvotes;
 
     @PrePersist
     protected void onCreate() {

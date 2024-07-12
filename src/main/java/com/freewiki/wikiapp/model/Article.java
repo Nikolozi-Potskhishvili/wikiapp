@@ -1,5 +1,6 @@
 package com.freewiki.wikiapp.model;
 
+import com.freewiki.wikiapp.wikisearch.ArticleImportance;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -30,11 +31,18 @@ public class Article {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Section> sections = new LinkedList<>();
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UpvoteDownvote> upvoteDownvotes = new LinkedList<>();
+
     @OneToMany(mappedBy = "articleFrom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WikiHyperlink> linksFrom = new LinkedList<>();
 
-    @OneToMany(mappedBy = "articleTo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "articleTo", fetch = FetchType.LAZY)
     private List<WikiHyperlink> linksTo = new LinkedList<>();
+
+    @OneToOne(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ArticleQuality articleQuality;
+
 
 
     public List<Section> getSections() {
@@ -104,5 +112,21 @@ public class Article {
 
     public void setLinksTo(List<WikiHyperlink> linksTo) {
         this.linksTo = linksTo;
+    }
+
+    public ArticleQuality getArticleQuality() {
+        return articleQuality;
+    }
+
+    public void setArticleQuality(ArticleQuality articleQuality) {
+        this.articleQuality = articleQuality;
+    }
+
+    public List<UpvoteDownvote> getUpvoteDownvotes() {
+        return upvoteDownvotes;
+    }
+
+    public void setUpvoteDownvotes(List<UpvoteDownvote> upvoteDownvotes) {
+        this.upvoteDownvotes = upvoteDownvotes;
     }
 }

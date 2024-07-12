@@ -1,7 +1,6 @@
 package com.freewiki.wikiapp.model;
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 
 @Entity
 @Table(name = "hyperlinks")
@@ -16,6 +15,11 @@ public class WikiHyperlink {
     @ManyToOne
     @JoinColumn(name = "article_to_id")
     private Article articleTo;
+
+
+    private Long sectionId;
+    private String text;
+    private String url;
 
     public Article getArticleFrom() {
         return articleFrom;
@@ -33,25 +37,20 @@ public class WikiHyperlink {
         this.articleTo = articleTo;
     }
 
-    private Long sectionId;
-
-    private String linkText;
-    private String linkUrl;
-
-    public String getLinkText() {
-        return linkText;
+    public String getText() {
+        return text;
     }
 
-    public void setLinkText(String linkText) {
-        this.linkText = linkText;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getLinkUrl() {
-        return linkUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setLinkUrl(String linkUrl) {
-        this.linkUrl = linkUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void setId(Long id) {

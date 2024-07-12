@@ -11,7 +11,7 @@ public class ArticleImportance {
     private static final int MAX_ITERATIONS = 100;
     private static final double MIN_DELTA = 0.0001;
 
-    public static Map<Article, Double> calculatePageRank(List<Article> articles) {
+        public static Map<Article, Double> calculatePageRank(List<Article> articles) {
         Map<Article, Set<Article>> incomingLinks = new HashMap<>();
         Map<Article, List<Article>> outgoingLinks = new HashMap<>();
         Map<Article, Double> pageRanks = new HashMap<>();
