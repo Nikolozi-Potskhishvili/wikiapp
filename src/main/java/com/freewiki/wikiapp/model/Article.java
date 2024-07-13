@@ -129,4 +129,10 @@ public class Article {
     public void setUpvoteDownvotes(List<UpvoteDownvote> upvoteDownvotes) {
         this.upvoteDownvotes = upvoteDownvotes;
     }
+
+    public int getArticleRating() {
+        return upvoteDownvotes.stream()
+                .mapToInt(upvoteDownvote -> upvoteDownvote.isUpvote() ? 1 : -1)
+                .sum();
+    }
 }

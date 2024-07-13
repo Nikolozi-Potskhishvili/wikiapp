@@ -50,6 +50,9 @@
             <h1 th:text="${article.title}">Article Title</h1>
             <button id="editArticleButton">Edit Article</button>
         </div>
+        <div class="article-rating">
+            <h1 th:text="${article.getArticleRating()}"> Article Rating</h1>
+        </div>
     </div>
     <div id="sections" th:each="section : ${article.sections}" class="paragraph-section">
         <div class="section-header">

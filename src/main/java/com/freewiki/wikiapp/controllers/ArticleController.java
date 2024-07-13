@@ -1,18 +1,14 @@
 package com.freewiki.wikiapp.controllers;
 
-import com.freewiki.wikiapp.model.Article;
-import com.freewiki.wikiapp.model.Paragraph;
-import com.freewiki.wikiapp.model.MyUser;
-import com.freewiki.wikiapp.model.Section;
+import com.freewiki.wikiapp.model.*;
 import com.freewiki.wikiapp.requests.IsAuthorRequest;
 import com.freewiki.wikiapp.responses.IsAuthorResponse;
-import com.freewiki.wikiapp.services.ArticleService;
-import com.freewiki.wikiapp.services.ParagraphService;
-import com.freewiki.wikiapp.services.MyUserService;
-import com.freewiki.wikiapp.services.SectionService;
+import com.freewiki.wikiapp.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +21,14 @@ public class ArticleController {
     private final ArticleService articleService;
     private final SectionService sectionService;
     private final MyUserService myUserService;
+    private final UpvoteDownvoteService upvoteDownvoteService;
 
     @Autowired
-    public ArticleController(ArticleService articleService, ParagraphService paragraphService, SectionService sectionService, MyUserService myUserService) {
+    public ArticleController(ArticleService articleService, ParagraphService paragraphService, SectionService sectionService, MyUserService myUserService, UpvoteDownvoteService upvoteDownvoteService) {
         this.articleService = articleService;
         this.sectionService = sectionService;
         this.myUserService = myUserService;
+        this.upvoteDownvoteService = upvoteDownvoteService;
     }
 
     @GetMapping("/searchForArticle")
@@ -55,6 +53,36 @@ public class ArticleController {
         model.addAttribute("username", username);
         if(article != null) return "article";
         return null;
+    }
+
+    @PostMapping("/article/setUpvoteDownvote")
+    public ResponseEntity<Object> setUpvoteDownvote(@RequestParam("articleId") long articleId,
+                                                    @RequestParam("isUpvote") boolean isUpvote, HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+        }
+        MyUser user = myUserService.getUserById(userId);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        Article article = articleService.findArticleById(articleId);
+        if (article == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Article not found");
+        }
+        UpvoteDownvote upvoteDownvote = new UpvoteDownvote();
+        upvoteDownvote.setUpvote(isUpvote);
+        upvoteDownvote.setArticle(article);
+        upvoteDownvote.setUser(user);
+
+        UpvoteDownvote result = upvoteDownvoteService.setUpvoteDownvote(upvoteDownvote);
+
+        if (result != null && result.getId() != null) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to set upvote/downvote");
+        }
     }
 /*
     @PostMapping("/deleteParagraph")
