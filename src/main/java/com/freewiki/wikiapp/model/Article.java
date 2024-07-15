@@ -40,6 +40,9 @@ public class Article {
     @OneToMany(mappedBy = "articleTo", fetch = FetchType.LAZY)
     private List<WikiHyperlink> linksTo = new LinkedList<>();
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ArticleView> views = new LinkedList<>();
+
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     private ArticleQuality articleQuality;
 
@@ -130,9 +133,19 @@ public class Article {
         this.upvoteDownvotes = upvoteDownvotes;
     }
 
+    public List<ArticleView> getViews() {
+        return views;
+    }
+
+    public void setViews(List<ArticleView> views) {
+        this.views = views;
+    }
+
     public int getArticleRating() {
         return upvoteDownvotes.stream()
                 .mapToInt(upvoteDownvote -> upvoteDownvote.isUpvote() ? 1 : -1)
                 .sum();
     }
+
+    public int getArticleViewCount() { return views.size();}
 }

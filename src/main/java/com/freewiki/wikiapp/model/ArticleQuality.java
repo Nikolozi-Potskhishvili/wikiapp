@@ -10,7 +10,7 @@ public class ArticleQuality {
 
     private Double textQualityScore;
     private Double pageRankScore;
-
+    private Double finalScore;
     @OneToOne()
     @MapsId
     @JoinColumn(name = "article_id")
@@ -19,6 +19,14 @@ public class ArticleQuality {
 
     public Long getArticleId() {
         return articleId;
+    }
+
+    public Double getFinalScore() {
+        return finalScore;
+    }
+
+    public void setFinalScore(Double finalScore) {
+        this.finalScore = finalScore;
     }
 
     public void setArticleId(Long articleId) {

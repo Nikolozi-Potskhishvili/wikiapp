@@ -17,6 +17,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 */
 
+function rate(isUpvote) {
+    // Send an AJAX request to upvote the article
+    fetch('rate/' + articleId, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isUpvote: isUpvote }   ),
+    }).then(response => {
+        if (response.ok) {
+            // Update UI or handle success
+        } else {
+            // Handle error
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
 
 $(document).ready(function() {
     console.log(isLoggedIn);

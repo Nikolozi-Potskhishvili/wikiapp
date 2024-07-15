@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${article.getTitle() + ' - FreeWiki'}"></title>
     <link rel="stylesheet" type="text/css" href="/css/articleStyles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/article.js" defer></script>
@@ -50,8 +50,20 @@
             <h1 th:text="${article.title}">Article Title</h1>
             <button id="editArticleButton">Edit Article</button>
         </div>
-        <div class="article-rating">
-            <h1 th:text="${article.getArticleRating()}"> Article Rating</h1>
+        <div id="rating">
+            <div class="upvote">
+                <!-- Upvote button -->
+                <button th:if="${username != null}" th:onclick="'rate(' + ${true} + ')'"
+                        title="Upvote this article">Upvote</button>
+                <span th:if="${username == null}" title="Login to upvote this article">Upvote</span>
+            </div>
+            <h1 th:text="${article.getArticleRating()}">Rating</h1>
+            <div class="downvote">
+                <!-- Downvote button -->
+                <button th:if="${username != null}" th:onclick="'rate(' + ${false} + ')'"
+                        title="Downvote this article">Downvote</button>
+                <span th:if="${username == null}" title="Login to downvote this article">Downvote</span>
+            </div>
         </div>
     </div>
     <div id="sections" th:each="section : ${article.sections}" class="paragraph-section">

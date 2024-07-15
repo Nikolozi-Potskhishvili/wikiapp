@@ -7,6 +7,7 @@ import org.apache.catalina.User;
 @Table(name = "upvotes_downvotes")
 public class UpvoteDownvote {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne()

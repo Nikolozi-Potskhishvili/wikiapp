@@ -22,6 +22,11 @@ public class ArticleScoreUpdaterService {
 
     private final ArticleRepository articleRepository;
     private final ArticleQualityRepository articleQualityRepository;
+    private final int PAGE_RANK_COOEFICIENT = 2;
+    private final int TEXT_QUALITY_COOEFICIENT = 2;
+    private final int RATING_COOEFICIENT = 2;
+    private final int VIEW_COUNT_COOEFICIENT = 2;
+
     public ArticleScoreUpdaterService(ArticleRepository articleRepository, ArticleQualityRepository articleQualityRepository, UpvoteDownvoteRepository upvoteDownvoteRepository) {
         this.articleRepository = articleRepository;
         this.articleQualityRepository = articleQualityRepository;
@@ -39,8 +44,16 @@ public class ArticleScoreUpdaterService {
                 articleQuality = new ArticleQuality();
                 articleQuality.setArticle(article);
             }
+            double rating = 100;
+            if(article.getUpvoteDownvotes().size() != 0) rating = (double) (article.getArticleRating() / article.getUpvoteDownvotes().size());
+            int viewCount = article.getArticleViewCount();
+            double finalScore = articleQuality.getTextQualityScore() * this.TEXT_QUALITY_COOEFICIENT
+                    + articleQuality.getPageRankScore() * PAGE_RANK_COOEFICIENT
+                    + rating * this.RATING_COOEFICIENT +
+                    viewCount * VIEW_COUNT_COOEFICIENT;
             articleQuality.setPageRankScore(pageRank.get(article));
-            articleQuality.setTextQualityScore(1.0);
+            articleQuality.setTextQualityScore(textQualityMap.get(article));
+            articleQuality.setFinalScore(finalScore);
             articleQualityRepository.save(articleQuality);
         }
     }

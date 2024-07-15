@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.random.RandomGenerator;
 
 @Service
 public class ArticleService {
@@ -63,7 +65,7 @@ public class ArticleService {
     }
 */
 
-  /*  public Article deleteParagraph(long articleId, long paragraphId) {
+   /*public Article deleteParagraph(long articleId, long paragraphId) {
         Article article = findArticleById(articleId);
         article.getParagraphs().removeIf(paragraph -> paragraph.getId().equals(paragraphId));
         articleRepository.save(article);
@@ -105,5 +107,9 @@ public class ArticleService {
         article.setSections(sections);
         articleRepository.save(article);
         return article;
+    }
+
+    public Article getRandomArticle() {
+        return articleRepository.findRandomArticle();
     }
 }

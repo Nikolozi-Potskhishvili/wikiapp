@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${article.title}">Article</title>
+    <title th:text="${article.getTitle() + ' - FreeWiki'}"></title>
     <link rel="stylesheet" type="text/css" href="/css/editArticle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/article.js" defer></script>

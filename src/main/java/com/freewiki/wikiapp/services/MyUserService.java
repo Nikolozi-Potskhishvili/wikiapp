@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -38,7 +39,7 @@ public class MyUserService {
     public MyUser findUserByUsername(String username) {
         Optional<MyUser> user = myUserRepository.findUserByUsername(username);
         if(!user.isPresent()) {
-            throw new RuntimeException("No such user exists");
+            throw new NoSuchElementException("No such user exists");
         }
         return user.get();
     }

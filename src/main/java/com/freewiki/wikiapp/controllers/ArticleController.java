@@ -2,6 +2,7 @@ package com.freewiki.wikiapp.controllers;
 
 import com.freewiki.wikiapp.model.*;
 import com.freewiki.wikiapp.requests.IsAuthorRequest;
+import com.freewiki.wikiapp.requests.UpvoteRequest;
 import com.freewiki.wikiapp.responses.IsAuthorResponse;
 import com.freewiki.wikiapp.services.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,18 +23,20 @@ public class ArticleController {
     private final SectionService sectionService;
     private final MyUserService myUserService;
     private final UpvoteDownvoteService upvoteDownvoteService;
-
+    private final ArticleViewService articleViewService;
     @Autowired
-    public ArticleController(ArticleService articleService, ParagraphService paragraphService, SectionService sectionService, MyUserService myUserService, UpvoteDownvoteService upvoteDownvoteService) {
+    public ArticleController(ArticleService articleService, ParagraphService paragraphService, SectionService sectionService, MyUserService myUserService, UpvoteDownvoteService upvoteDownvoteService, ArticleViewService articleViewService) {
         this.articleService = articleService;
         this.sectionService = sectionService;
         this.myUserService = myUserService;
         this.upvoteDownvoteService = upvoteDownvoteService;
+        this.articleViewService = articleViewService;
     }
 
     @GetMapping("/searchForArticle")
     public String searchArticle(@RequestParam String title, final Model model) {
-        ArrayList<Article> articles = articleService.findArticlesByTitle(title);
+        List<Article> articles = articleService.findArticlesByTitle(title);
+        articles.sort(Comparator.comparingDouble(a -> a.getArticleQuality().getFinalScore()));
         model.addAttribute("articles", articles);
         model.addAttribute("title", title);
         return "searchResults";
@@ -48,6 +51,13 @@ public class ArticleController {
                 .collect(Collectors.toList());
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
+        MyUser user = null;
+        try {
+            user = myUserService.findUserByUsername(username);
+        } catch (NoSuchElementException ignored) {
+
+        }
+        articleViewService.addViewToArticle(article, user, request.getRemoteAddr());
         article.setSections(sortedSections);
         model.addAttribute("article", article);
         model.addAttribute("username", username);
@@ -55,9 +65,9 @@ public class ArticleController {
         return null;
     }
 
-    @PostMapping("/article/setUpvoteDownvote")
-    public ResponseEntity<Object> setUpvoteDownvote(@RequestParam("articleId") long articleId,
-                                                    @RequestParam("isUpvote") boolean isUpvote, HttpSession session) {
+    @PostMapping("/article/rate/{id}")
+    public ResponseEntity<Object> setUpvoteDownvote(@PathVariable("id") long articleId,
+                                                    @RequestBody UpvoteRequest upvoteRequest, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         if (userId == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
@@ -72,7 +82,7 @@ public class ArticleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Article not found");
         }
         UpvoteDownvote upvoteDownvote = new UpvoteDownvote();
-        upvoteDownvote.setUpvote(isUpvote);
+        upvoteDownvote.setUpvote(upvoteDownvote.isUpvote());
         upvoteDownvote.setArticle(article);
         upvoteDownvote.setUser(user);
 
@@ -84,18 +94,6 @@ public class ArticleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to set upvote/downvote");
         }
     }
-/*
-    @PostMapping("/deleteParagraph")
-    public ResponseEntity<Map<String, String>> deleteParagraph(@RequestBody Map<String, Long> requestData) {
-        long articleId = requestData.get("articleId");
-        long paragraphId = requestData.get("paragraphId");
-        Article article = articleService.deleteParagraph(articleId, paragraphId);
-        Map<String, String> responseBody = new HashMap<>();
-        responseBody.put("message", "Paragraph deleted successfully");
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(responseBody);
-    }*/
 
     @PostMapping("/isAuthor")
     @ResponseBody
@@ -183,5 +181,6 @@ public class ArticleController {
     @GetMapping("/randomArticle")
     public String getRandomArticle(final Model model, HttpServletRequest request) {
         return "";
+
     }
 }
